@@ -39,3 +39,10 @@ a user can quickly get a gist of an opening without having to pour dollars and h
 into books and websites. This program can be very helpful to chess players
 looking to study openings and improve their games, especially newer players
 looking for an opening to study.
+
+**User Stories**
+- As a user, I want to find openings which often lead to draws
+- As a user, I want to find openings which require minimal memorization
+- As a user, I want to find openings which lead to open games
+- As a user, I want to add a new opening line to the database
+- 
