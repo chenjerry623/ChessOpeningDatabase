@@ -4,18 +4,6 @@ package model;
 public class Opening {
 
 
-    // TODO: turn into enums
-
-
-    // constants used to represent sides in a match
-    public static final int WHITE = 0;
-    public static final int BLACK = 1;
-
-
-    // constants used to represent result of a match
-    public static final int WIN = 0;
-    public static final int LOSS = 1;
-    public static final int DRAW = 2;
 
     private String openingName;         // the name of the opening
 
