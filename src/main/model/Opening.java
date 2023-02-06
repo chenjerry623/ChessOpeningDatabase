@@ -1,10 +1,12 @@
 package model;
 
-    // represents a single chess opening, with info on the name, win/loss/draws, memorization, tendencies and lines
+// represents a single chess opening, with info on the name, win/loss/draws, memorization, tendencies and lines
 public class Opening {
 
 
-    // ASK TA: CAN I SET THESE TO PUBLIC??????
+    // TODO: turn into enums
+
+
     // constants used to represent sides in a match
     public static final int WHITE = 0;
     public static final int BLACK = 1;
@@ -21,13 +23,13 @@ public class Opening {
     private int lossCount;              // user's total amount of losses with the opening
     private int drawCount;              // user's total amount of draws
 
-    private int winCountWhite;          // user's total amount of wins as white
-    private int lossCountWhite;         // user's total amount of losses as white
-    private int drawCountWhite;         // user's total amount of draws as white
+    // private int winCountWhite;          // user's total amount of wins as white
+    // private int lossCountWhite;         // user's total amount of losses as white
+    // private int drawCountWhite;         // user's total amount of draws as white
 
-    private int winCountBlack;          // user's total amount of wins as black
-    private int lossCountBlack;         // user's total amount of losses as black
-    private int drawCountBlack;         // user's total amount of draws as black
+    // private int winCountBlack;          // user's total amount of wins as black
+    // private int lossCountBlack;         // user's total amount of losses as black
+    // private int drawCountBlack;         // user's total amount of draws as black
 
     private int totalGames;             // user's total amount of games with the opening
 
@@ -47,15 +49,7 @@ public class Opening {
     }
 
     // GETTERS:
-    // TODO: maybe simplify getters?(idk if I should)
-    public int getWinCount() {
-        return winCount;
-    }
-
-    public int getLossCount() {
-        return lossCount;
-    }
-
+    /*
     public int getWinCountWhite() {
         return winCountWhite;
     }
@@ -79,6 +73,14 @@ public class Opening {
     public int getDrawCountBlack() {
         return drawCountBlack;
     }
+    */
+    public int getWinCount() {
+        return winCount;
+    }
+
+    public int getLossCount() {
+        return lossCount;
+    }
 
     public int getDrawCount() {
         return drawCount;
@@ -96,21 +98,82 @@ public class Opening {
         return memorizeRequired;
     }
 
+    public String getOpeningName() {
+        return this.openingName;
+    }
+
+    // SETTERS
+
+    // REQUIRES: count >= 0
+    // MODIFIES: this
+    // EFFECTS: sets the win count to count, adds (winCount - count) to total win count
+    public void setWinCount(int count) {
+        // stub
+    }
+
+    // REQUIRES: count >= 0
+    // MODIFIES: this
+    // EFFECTS: sets the loss count to count, adds (winCount - count) to total loss count
+    public void setLossCount(int count) {
+        // stub
+    }
+
+    // REQUIRES: count >= 0
+    // MODIFIES: this
+    // EFFECTS: sets the loss count to count, adds (winCount - count) to total loss count
+    public void setDrawCount(int count) {
+        // stub
+    }
+
+    // TODO (maybe)
+    // REQUIRES: count >= 0
+    // MODIFIES: this
+    // EFFECTS: sets the win count of playerSide to count, adds (winCount of playerSide - count) to total win count
+    public void setWinCountSide(Side playerSide, int count) {
+        if (playerSide == Side.WHITE) {
+            // stub
+        } else {
+            // stub
+        }
+    }
+
+    // TODO
+    // REQUIRES: count >= 0
+    // MODIFIES: this
+    // EFFECTS: sets the loss count of playerSide to count, adds (lossCount of playerSide - count) to total win count
+    public void setLossCountSide(Side playerSide, int count) {
+        if (playerSide == Side.WHITE) {
+            // stub
+        } else {
+            // stub
+        }
+    }
+
+    // TODO
+    // REQUIRES: count >= 0
+    // MODIFIES: this
+    // EFFECTS: sets the draw count of playerSide to count,, adds (drawCount of playerSide - count) to total win count
+    public void setDrawCountSide(Side playerSide, int count) {
+        if (playerSide == Side.WHITE) {
+            // stub
+        } else {
+            // stub
+        }
+    }
+
     // FUNCTION METHODS:
 
     // TODO
     // REQUIRES: side is either WHITE or BLACK (0 or 1), result is either WIN, LOSS or DRAW (0, 1 or 2)
-    // MODIFIES: this (IF REQUIRED: userWinCount, userWinCountWhite, userWinCountBlack,
-    //                              userLossCount, userLossCountWhite, userLossCountBlack,
-    //                              totalGames)
+    // MODIFIES: this
     // EFFECTS: adds a win for the user for either white or black
-    public void addUserResult(int side, int result){
+    public void addUserResult(Side side, Result result){
         // stub
     }
 
     // TODO
     // REQUIRES: moves >= 0
-    // MODIFIES: this (IF REQUIRED: memorizeRequired)
+    // MODIFIES: this
     // EFFECTS: sets the amount of memorization required in a line
     public void setMemorizeRequired(int moves){
         // stub
@@ -118,7 +181,7 @@ public class Opening {
 
     // TODO
     // REQUIRES: moves >= 0
-    // MODIFIES: this (IF REQUIRED: movesMemorized)
+    // MODIFIES: this
     // EFFECTS: sets the amount of moves memorized in a line
     public void setMovesMemorized(int moves){
         // stub

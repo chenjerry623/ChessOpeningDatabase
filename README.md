@@ -10,14 +10,6 @@ These databases can be used to store notes on the user's:
 - memorization 
   - how many moves deep have I memorized this opening?
   - how much memorization do I need in order to play this opening well?
-- tendencies with an opening
-  - does the user tend to castle king or queen side?
-  - does the user end up with open or closed games in this opening?
-  - how long does it usually take for the user to reach the endgame in this opening?
-
-Additionally, an opening can also contain information on:
-- Opening lines which branch off from this opening
-- The moves of the opening
 
 
 The database will also allow the user to add or edit information on openings 
@@ -36,6 +28,5 @@ and results with an opening.
 **User Stories**
 - As a user, I want to find openings which I often get draws with
 - As a user, I want to find an opening that does not require a lot of memorization
-- As a user, I want to find openings which lead to open games
 - As a user, I want to add a new opening line to the database
 - As a user, I want to add a win to the win count of an opening
