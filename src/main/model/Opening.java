@@ -3,7 +3,7 @@ package model;
 // represents a single chess opening, with info on the name, win/loss/draws, memorization, tendencies and lines
 public class Opening {
 
-
+    // LAST FILE VERSION WITH OPTIONAL VARIABLES
 
     private String openingName;         // the name of the opening
 
