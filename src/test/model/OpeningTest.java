@@ -21,14 +21,6 @@ class OpeningTest {
         assertEquals(0, this.testOpening.getWinCount());
         assertEquals(0, this.testOpening.getLossCount());
         assertEquals(0, this.testOpening.getDrawCount());
-        assertEquals(0, this.testOpening.getMovesMemorized());
-        assertEquals(0, this.testOpening.getMemorizeRequired());
-        // assertEquals(0, this.testOpening.getWinCountWhite());
-        // assertEquals(0, this.testOpening.getWinCountBlack());
-        // assertEquals(0, this.testOpening.getLossCountWhite());
-        // assertEquals(0, this.testOpening.getLossCountBlack());
-        // assertEquals(0, this.testOpening.getDrawCountWhite());
-        // assertEquals(0, this.testOpening.getDrawCountBlack());
         assertEquals(0, this.testOpening.getTotalGames());
     }
 
@@ -159,19 +151,4 @@ class OpeningTest {
         assertEquals(1, this.testOpening.getDrawCount());
     }
 
-    @Test
-    public void setMemorizeTest() {
-        this.testOpening.setMemorizeRequired(50);
-        assertEquals(50, this.testOpening.getMemorizeRequired());
-        this.testOpening.setMemorizeRequired(60);
-        assertEquals(60, this.testOpening.getMemorizeRequired());
-    }
-
-    @Test
-    public void setMemorizedTest() {
-        this.testOpening.setMovesMemorized(50);
-        assertEquals(50, this.testOpening.getMovesMemorized());
-        this.testOpening.setMovesMemorized(60);
-        assertEquals(60, this.testOpening.getMovesMemorized());
-    }
 }

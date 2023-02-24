@@ -28,26 +28,20 @@ public class OpeningDatabaseApp {
     private static final String WIN_COMMAND = "w";
     private static final String LOSSES_COMMAND = "l";
     private static final String DRAWS_COMMAND = "d";
-    private static final String MEMORIZED_COMMAND = "a";
-    private static final String REQUIRED_COMMAND = "r";
 
     // Lengths
     private static final String INDEX_LENGTH = "%-10s";
     private static final String NAME_LENGTH = "%-20s";
     private static final String RESULTS_LENGTH = "%-10s";
-    private static final String MEMORIZE_LENGTH = "%-20s";
 
     // Column names
-    private static final String[] COLUMN_NAMES = {"Index", "Name", "Wins", "Losses", "Draws",
-                                                    "Moves Memorized", "Memorization Required"};
+    private static final String[] COLUMN_NAMES = {"Index", "Name", "Wins", "Losses", "Draws"};
 
     // Fields to store values for new openings being created
     String tempName;
     int tempWins;
     int tempLosses;
     int tempDraws;
-    int tempMemorize;
-    int tempRequired;
     Opening newOpening;
 
 
@@ -217,35 +211,6 @@ public class OpeningDatabaseApp {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: process the user's memorized input, setting the tempMemorized value if valid
-    private void processMemorizedInput() throws InvalidInputException, NumberFormatException {
-
-        try {
-            tempMemorize = getNumInput();
-        } catch (InvalidInputException e) {
-            System.out.println("Please enter a number greater than or equal to 0:");
-            processMemorizedInput();
-        } catch (NumberFormatException e) {
-            System.out.println("Please enter a number:");
-            processMemorizedInput();
-        }
-    }
-
-    // MODIFIES: this
-    // EFFECTS: process the user's memorization required input, setting the tempRequired value if valid
-    private void processRequiredInput() throws InvalidInputException, NumberFormatException {
-
-        try {
-            tempRequired = getNumInput();
-        } catch (InvalidInputException e) {
-            System.out.println("Please enter a number greater than or equal to 0:");
-            processRequiredInput();
-        } catch (NumberFormatException e) {
-            System.out.println("Please enter a number:");
-            processRequiredInput();
-        }
-    }
 
     // EFFECTS: asks the user for data and creates a new opening
     private Opening makeOpening() throws InvalidInputException {
@@ -268,13 +233,8 @@ public class OpeningDatabaseApp {
             System.out.println("Draws:");
             processDrawInput();
 
-            System.out.println("Moves Memorized:");
-            processMemorizedInput();
 
-            System.out.println("How many moves do you hope to memorize:");
-            processRequiredInput();
-
-            newOpening = new Opening(tempName, tempWins, tempLosses, tempDraws, tempMemorize, tempRequired);
+            newOpening = new Opening(tempName, tempWins, tempLosses, tempDraws);
             return newOpening;
         } else {
             newOpening = new Opening(tempName);
@@ -291,19 +251,15 @@ public class OpeningDatabaseApp {
         String winCol = String.format(RESULTS_LENGTH, "Wins");
         String lossCol = String.format(RESULTS_LENGTH, "Losses");
         String drawCol = String.format(RESULTS_LENGTH, "Draws");
-        String memCol = String.format(MEMORIZE_LENGTH, "Moves Memorized");
-        String memRqrdCol = String.format(MEMORIZE_LENGTH, "Memorization Required");
 
-        System.out.println(indexCol + nameCol + winCol + lossCol + drawCol + memCol + memRqrdCol);
+        System.out.println(indexCol + nameCol + winCol + lossCol + drawCol);
         for (Opening o : openings) {
             String indexStr = String.format(INDEX_LENGTH, Integer.toString(openings.indexOf(o)));
             String nameStr = String.format(NAME_LENGTH, o.getOpeningName());
             String winStr = String.format(RESULTS_LENGTH, o.getWinCount());
             String lossStr = String.format(RESULTS_LENGTH, o.getLossCount());
             String drawStr = String.format(RESULTS_LENGTH, o.getDrawCount());
-            String memStr = String.format(MEMORIZE_LENGTH, o.getMovesMemorized());
-            String memRqrdStr = String.format(MEMORIZE_LENGTH, o.getMemorizeRequired());
-            System.out.println(indexStr + nameStr + winStr + lossStr + drawStr + memStr + memRqrdStr);
+            System.out.println(indexStr + nameStr + winStr + lossStr + drawStr);
         }
 
         System.out.println("\nWhat do you want to do?");
@@ -359,8 +315,6 @@ public class OpeningDatabaseApp {
         System.out.println("\tw -> (w)ins)");
         System.out.println("\tl -> (l)osses)");
         System.out.println("\td -> (d)raws)");
-        System.out.println("\ta -> (a)mount memorized)");
-        System.out.println("\tr -> memorization (r)equired))");
         System.out.println("\tm -> return to (m)enu))");
         System.out.println("\tq -> (q)uit");
 
@@ -385,10 +339,6 @@ public class OpeningDatabaseApp {
             sortByLosses();
         } else if (command.equals(DRAWS_COMMAND)) {
             sortByDraws();
-        } else if (command.equals(MEMORIZED_COMMAND)) {
-            sortByMemorized();
-        } else if (command.equals(REQUIRED_COMMAND)) {
-            sortByRequired();
         } else if (command.equals(MENU_COMMAND)) {
             displayMenu();
         } else if (command.equals(QUIT_COMMAND)) {
@@ -413,15 +363,6 @@ public class OpeningDatabaseApp {
 
     }
 
-    // TODO
-    private void sortByMemorized() {
-
-    }
-
-    // TODO
-    private void sortByRequired() {
-
-    }
 
 
 }
