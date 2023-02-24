@@ -26,7 +26,7 @@ it would be useful to have an application that can be used to track preparation,
 and results with an opening.
 
 **User Stories**
-- As a user, I want to find openings which I often get draws with
-- As a user, I want to find an opening that does not require a lot of memorization
+- As a user, I want to see which openings I've won the most games with
+- As a user, I want to see which openings I've memorized the most moves for
 - As a user, I want to add a new opening line to the database
 - As a user, I want to add a win to the win count of an opening

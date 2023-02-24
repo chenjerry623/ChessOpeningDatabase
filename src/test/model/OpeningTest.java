@@ -39,6 +39,15 @@ class OpeningTest {
         assertEquals(50, this.testOpening.getTotalGames());
         assertEquals(0, this.testOpening.getLossCount());
         assertEquals(0, this.testOpening.getDrawCount());
+    }
+
+    @Test
+    public void setWinTestMultiple() {
+        this.testOpening.setWinCount(50);
+        assertEquals(50, this.testOpening.getWinCount());
+        assertEquals(50, this.testOpening.getTotalGames());
+        assertEquals(0, this.testOpening.getLossCount());
+        assertEquals(0, this.testOpening.getDrawCount());
         this.testOpening.setWinCount(20);
         assertEquals(70, this.testOpening.getWinCount());
         assertEquals(70, this.testOpening.getTotalGames());
@@ -53,6 +62,15 @@ class OpeningTest {
         assertEquals(50, this.testOpening.getTotalGames());
         assertEquals(50, this.testOpening.getLossCount());
         assertEquals(0, this.testOpening.getDrawCount());
+    }
+
+    @Test
+    public void setLossTestMultiple() {
+        this.testOpening.setLossCount(50);
+        assertEquals(0, this.testOpening.getWinCount());
+        assertEquals(50, this.testOpening.getTotalGames());
+        assertEquals(50, this.testOpening.getLossCount());
+        assertEquals(0, this.testOpening.getDrawCount());
         this.testOpening.setLossCount(20);
         assertEquals(0, this.testOpening.getWinCount());
         assertEquals(70, this.testOpening.getTotalGames());
@@ -62,6 +80,15 @@ class OpeningTest {
 
     @Test
     public void setDrawTest() {
+        this.testOpening.setDrawCount(50);
+        assertEquals(0, this.testOpening.getWinCount());
+        assertEquals(50, this.testOpening.getTotalGames());
+        assertEquals(0, this.testOpening.getLossCount());
+        assertEquals(50, this.testOpening.getDrawCount());
+    }
+
+    @Test
+    public void setDrawTestMultiple() {
         this.testOpening.setDrawCount(50);
         assertEquals(0, this.testOpening.getWinCount());
         assertEquals(50, this.testOpening.getTotalGames());

@@ -32,8 +32,23 @@ public class Opening {
     // TODO
     // REQUIRES: name has a non-zero length
     // EFFECTS: openingName is set to name, every other variable is set to 0
-    public Opening(String name){
-        // stub
+    public Opening(String name) {
+        this.openingName = name;
+        this.winCount = 0;
+        this.lossCount = 0;
+        this.drawCount = 0;
+        this.movesMemorized = 0;
+        this.memorizeRequired = 0;
+    }
+
+    // TODO FINISH THE REQUIRES EFFECTS
+    public Opening(String name, int wins, int losses, int draws, int memorize, int memorizeRequired) {
+        this.openingName = name;
+        this.winCount = wins;
+        this.lossCount = losses;
+        this.drawCount = draws;
+        this.movesMemorized = memorize;
+        this.memorizeRequired = memorizeRequired;
     }
 
     // GETTERS:
