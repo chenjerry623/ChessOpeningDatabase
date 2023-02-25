@@ -1,41 +1,21 @@
 package ui;
 
+import exceptions.EmptyDatabaseException;
 import exceptions.InvalidInputException;
 import model.Opening;
+import model.Result;
+import model.Side;
+import utility.*;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 // Opening Database App
 public class OpeningDatabaseApp {
 
-    // Universal Commands
-    private static final String QUIT_COMMAND = "q";
-    private static final String MENU_COMMAND = "m";
-    private static final String ADD_COMMAND = "a";
-
-
-    // Browse Commands
-    private static final String SELECT_COMMAND = "s";
-    private static final String CRITERIA_COMMAND = "c";
-
-
-    // Menu Commands
-    private static final String BROWSE_COMMAND = "b";
-
-    // Criteria Commands
-    private static final String WIN_COMMAND = "w";
-    private static final String LOSSES_COMMAND = "l";
-    private static final String DRAWS_COMMAND = "d";
-
-    // Lengths
-    private static final String INDEX_LENGTH = "%-10s";
-    private static final String NAME_LENGTH = "%-20s";
-    private static final String RESULTS_LENGTH = "%-10s";
-
-    // Column names
-    private static final String[] COLUMN_NAMES = {"Index", "Name", "Wins", "Losses", "Draws"};
+    public static final String NEW_LINE = "/n";
 
     // Fields to store values for new openings being created
     String tempName;
@@ -44,55 +24,28 @@ public class OpeningDatabaseApp {
     int tempDraws;
     Opening newOpening;
 
-
     private List<Opening> openings; // current opening database
-    private List<String> data;      // data to be displayed
 
     private Scanner input;          // tracks the user's input
 
     private String command;         // string value of the user's input
 
-    // TODO
     // EFFECTS: runs the opening database application
     public OpeningDatabaseApp() {
         runApp();
     }
 
     private void runApp() {
-        String command = null;      // tracks the user's input as a string
-
         init();
 
         displayMenu();
-
-
-
     }
 
     // EFFECTS: initializes the opening database and scanner
     private void init() {
-        openings = new ArrayList<Opening>();
+        openings = new ArrayList<>();
         input = new Scanner(System.in);
-        input.useDelimiter("/n");   // tells the scanner to use new lines to separate inputs
-    }
-
-    // EFFECTS: displays the app's menu
-    private void displayMenu() {
-        System.out.println("\nWelcome to your opening database!");
-        System.out.println("\nWhat do you want to do?");
-        System.out.println("\tb -> (b)rowse your openings");
-        System.out.println("\ta -> (a)dd an opening");
-        System.out.println("\tq -> (q)uit");
-
-        getNextCommand();
-
-        try {
-            processMenuCommand(command);
-        } catch (InvalidInputException e) {
-            System.out.println("Invalid input, returning to menu...");
-            displayMenu();
-        }
-
+        input.useDelimiter(NEW_LINE);   // tells the scanner to use new lines to separate inputs
     }
 
     // MODIFIES: this
@@ -102,25 +55,63 @@ public class OpeningDatabaseApp {
         command = command.toLowerCase();    // convert the command to lowercase, makes handling inputs easier
     }
 
-    // TODO
+    // MENU FUNCTIONS
+
+    // EFFECTS: displays the app's menu
+    private void displayMenu() {
+
+        boolean keepGoing;
+
+        do {
+            System.out.println("\nWelcome to your opening database!");
+            System.out.println("\nWhat do you want to do?");
+            System.out.println("\tb -> (b)rowse your openings");
+            System.out.println("\ta -> (a)dd an opening");
+            System.out.println("\tq -> (q)uit");
+
+            getNextCommand();
+
+            try {
+                processMenuCommand();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Invalid input, returning to menu...");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+
+    }
+
     // EFFECTS: process the user's command from the menu
-    private void processMenuCommand(String command) throws InvalidInputException {
-        if (command.equals(BROWSE_COMMAND)) {
-            displayBrowse();
-        } else if (command.equals(ADD_COMMAND)) {
-            addOpening();
-        } else if (command.equals(QUIT_COMMAND)) {
-            quit();
-        } else {
-            throw new InvalidInputException();
+    private void processMenuCommand() throws InvalidInputException {
+
+        switch (command) {
+            case Commands.BROWSE_COMMAND:
+                displayBrowse();
+                break;
+            case Commands.ADD_COMMAND:
+                addOpening();
+                break;
+            case Commands.QUIT_COMMAND:
+                quit();
+                break;
+            default:
+                throw new InvalidInputException();
         }
     }
 
+    // EFFECTS: prompts the user to return to the main menu if any key is entered
+    private void returnToMenuPrompt() {
+        System.out.println("Enter any key to return to the main menu.");
+        getNextCommand();
+        displayMenu();
+    }
+
+    // ADD OPENING FUNCTIONS
+
     // MODIFIES: this
     // EFFECTS: prompts the user to input a new opening and adds it to openings
-    private void addOpening() throws InvalidInputException, NumberFormatException {
-
-
+    private void addOpening() throws NumberFormatException {
 
         openings.add(makeOpening());
 
@@ -130,12 +121,11 @@ public class OpeningDatabaseApp {
 
     }
 
-
     // EFFECTS: gets the name input from the user
     private String getNameInput() throws InvalidInputException {
 
         getNextCommand();
-        if (command.length() > 0) {
+        if (command.length() > 0 && command.length() < 30) {
             return command;
         } else {
             throw new InvalidInputException();
@@ -144,14 +134,20 @@ public class OpeningDatabaseApp {
 
     // MODIFIES: this
     // EFFECTS: process the user's name input, setting the database's name value if valid
-    private void processNameInput() throws InvalidInputException {
+    private void processNameInput() {
 
-        try {
-            tempName = getNameInput();
-        } catch (InvalidInputException e) {
-            System.out.println("Invalid input, please input the name again:");
-            processNameInput();
-        }
+        boolean keepGoing;
+
+        do {
+            try {
+                tempName = getNameInput();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Invalid input, please input the name again:");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+
 
     }
 
@@ -168,52 +164,69 @@ public class OpeningDatabaseApp {
 
     // MODIFIES: this
     // EFFECTS: process the user's wins input, setting the tempWins value if valid
-    private void processWinsInput() throws InvalidInputException, NumberFormatException {
+    private void processWinsInput() throws NumberFormatException {
 
-        try {
-            tempWins = getNumInput();
-        } catch (InvalidInputException e) {
-            System.out.println("Please enter a number greater than or equal to 0:");
-            processWinsInput();
-        } catch (NumberFormatException e) {
-            System.out.println("Please enter a number:");
-            processWinsInput();
-        }
+        boolean keepGoing;
+
+        do {
+            try {
+                tempWins = getNumInput();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Please enter a number greater than or equal to 0:");
+                keepGoing = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number:");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+
     }
 
     // MODIFIES: this
     // EFFECTS: process the user's loss input, setting the tempLosses value if valid
-    private void processLossInput() throws InvalidInputException, NumberFormatException {
+    private void processLossInput() throws NumberFormatException {
 
-        try {
-            tempLosses = getNumInput();
-        } catch (InvalidInputException e) {
-            System.out.println("Please enter a number greater than or equal to 0:");
-            processLossInput();
-        } catch (NumberFormatException e) {
-            System.out.println("Please enter a number:");
-            processLossInput();
-        }
+        boolean keepGoing;
+
+        do {
+            try {
+                tempLosses = getNumInput();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Please enter a number greater than or equal to 0:");
+                keepGoing = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number:");
+                keepGoing = true;
+            }
+        } while (keepGoing);
     }
 
     // MODIFIES: this
     // EFFECTS: process the user's draw input, setting the tempDraws value if valid
-    private void processDrawInput() throws InvalidInputException, NumberFormatException {
+    private void processDrawInput() throws NumberFormatException {
 
-        try {
-            tempDraws = getNumInput();
-        } catch (InvalidInputException e) {
-            System.out.println("Please enter a number greater than or equal to 0:");
-            processDrawInput();
-        } catch (NumberFormatException e) {
-            System.out.println("Please enter a number:");
-            processDrawInput();
-        }
+        boolean keepGoing;
+
+        do {
+            try {
+                tempDraws = getNumInput();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Please enter a number greater than or equal to 0:");
+                keepGoing = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number:");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+
+
     }
 
-
     // EFFECTS: asks the user for data and creates a new opening
-    private Opening makeOpening() throws InvalidInputException {
+    private Opening makeOpening() {
 
         System.out.println("Adding an Opening...");
         System.out.println("Opening name:");
@@ -235,134 +248,398 @@ public class OpeningDatabaseApp {
 
 
             newOpening = new Opening(tempName, tempWins, tempLosses, tempDraws);
-            return newOpening;
         } else {
             newOpening = new Opening(tempName);
-            return newOpening;
         }
+        return newOpening;
     }
 
+    // BROWSE FUNCTIONS
 
-    // TODO: CONDENSE THE METHOD, MAKE HELPERS
-    // EFFECTS: allows user to browse through openings
-    private void displayBrowse() throws InvalidInputException {
-        String indexCol = String.format(INDEX_LENGTH, "Index");
-        String nameCol = String.format(NAME_LENGTH, "Name");
-        String winCol = String.format(RESULTS_LENGTH, "Wins");
-        String lossCol = String.format(RESULTS_LENGTH, "Losses");
-        String drawCol = String.format(RESULTS_LENGTH, "Draws");
+    // MODIFIES: this
+    // EFFECTS: displays the opening database, then prompts user to interact with the table
+    private void displayBrowse() {
 
-        System.out.println(indexCol + nameCol + winCol + lossCol + drawCol);
-        for (Opening o : openings) {
-            String indexStr = String.format(INDEX_LENGTH, Integer.toString(openings.indexOf(o)));
-            String nameStr = String.format(NAME_LENGTH, o.getOpeningName());
-            String winStr = String.format(RESULTS_LENGTH, o.getWinCount());
-            String lossStr = String.format(RESULTS_LENGTH, o.getLossCount());
-            String drawStr = String.format(RESULTS_LENGTH, o.getDrawCount());
-            System.out.println(indexStr + nameStr + winStr + lossStr + drawStr);
-        }
+        printTable();
 
         System.out.println("\nWhat do you want to do?");
         System.out.println("\ts -> (s)elect an opening");
         System.out.println("\tc -> sort by (c)riteria");
         System.out.println("\ta -> (a)dd an opening");
-        System.out.println("\tm -> return to (menu)");
+        System.out.println("\tm -> return to (m)enu");
         System.out.println("\tq -> (q)uit");
 
-        getNextCommand();
-        try {
-            processBrowseCommand(command);
-        } catch (InvalidInputException e) {
-            System.out.println("Selection not valid. Please try again.");
-            getNextCommand();
-            processCriteriaCommand();
-        }
+        boolean keepGoing;
 
+        do {
+            try {
+                processBrowseCommand();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Selection not valid. Please try again.");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+    }
+
+    // EFFECTS: displays the openings in the database as a table
+    private void printTable() {
+        String indexCol = String.format(Commands.INDEX_LENGTH, "Index");
+        String nameCol = String.format(Commands.NAME_LENGTH, "Name");
+        String winCol = String.format(Commands.RESULTS_LENGTH, "Wins");
+        String lossCol = String.format(Commands.RESULTS_LENGTH, "Losses");
+        String drawCol = String.format(Commands.RESULTS_LENGTH, "Draws");
+        String totalCol = String.format(Commands.RESULTS_LENGTH, "Total Matches");
+
+        System.out.println(indexCol + nameCol + winCol + lossCol + drawCol + totalCol);
+
+        for (Opening o : openings) {
+            String indexStr = String.format(Commands.INDEX_LENGTH, openings.indexOf(o));
+            String nameStr = String.format(Commands.NAME_LENGTH, o.getOpeningName());
+            String winStr = String.format(Commands.RESULTS_LENGTH, o.getWinCount());
+            String lossStr = String.format(Commands.RESULTS_LENGTH, o.getLossCount());
+            String drawStr = String.format(Commands.RESULTS_LENGTH, o.getDrawCount());
+            String totalStr = String.format(Commands.RESULTS_LENGTH, o.getTotalGames());
+            System.out.println(indexStr + nameStr + winStr + lossStr + drawStr + totalStr);
+        }
     }
 
     // EFFECTS: process the user's command and open the corresponding page
-    private void processBrowseCommand(String command) throws InvalidInputException {
-        if (command.equals(SELECT_COMMAND)) {
-            selectOpening();
-        } else if (command.equals(CRITERIA_COMMAND)) {
-            displayCriteria();
-        } else if (command.equals(ADD_COMMAND)) {
-            addOpening();
-        } else if (command.equals(MENU_COMMAND)) {
-            displayMenu();
-        } else if (command.equals(QUIT_COMMAND)) {
-            quit();
+    private void processBrowseCommand() throws InvalidInputException {
+        getNextCommand();
+        switch (command) {
+            case Commands.SELECT_COMMAND:
+                selectOpening();
+                break;
+            case Commands.CRITERIA_COMMAND:
+                displayCriteria();
+                break;
+            case Commands.ADD_COMMAND:
+                addOpening();
+                break;
+            case Commands.MENU_COMMAND:
+                displayMenu();
+                break;
+            case Commands.QUIT_COMMAND:
+                quit();
+                break;
+            default:
+                throw new InvalidInputException();
+        }
+    }
+
+
+
+    // SELECT OPENING FUNCTIONS
+
+    // MODIFIES: this, o
+    // EFFECTS: allows the user to select an opening from openings
+    private void selectOpening() throws NumberFormatException {
+        System.out.println("Input the index of the opening you want to select:");
+        Opening selectedOpening;
+
+        boolean keepGoing;
+
+        do {
+            try {
+                selectedOpening = inputSelection();
+                selectedOpening.displayInfo();
+                selectOptions(selectedOpening);
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Please enter a valid index: ");
+                keepGoing = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a number: ");
+                keepGoing = true;
+            } catch (EmptyDatabaseException e) {
+                System.out.println("Database is empty, returning to menu...");
+                displayMenu();
+                keepGoing = false;
+            }
+        } while (keepGoing);
+
+
+    }
+
+    // MODIFIES: this, o
+    // EFFECTS: prompts the user to select what to do with the opening
+    private void selectOptions(Opening o) throws InvalidInputException {
+
+        System.out.println("\nWhat do you want to do next?");
+        System.out.println("\tw -> add a (w)in");
+        System.out.println("\tl -> add a (l)oss");
+        System.out.println("\td -> add a (d)raw");
+        System.out.println("\tm -> return to (m)enu)");
+        System.out.println("\tq -> (q)uit");
+
+        boolean keepGoing;
+
+        do {
+            try {
+                processSelect(o);
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Please enter a valid input:");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+    }
+
+    // MODIFIES: this, o
+    // EFFECTS: adds a win/loss/draw to o, depending on user's input
+    private void processSelect(Opening o) throws InvalidInputException {
+        getNextCommand();
+
+        switch (command) {
+            case Commands.WIN_COMMAND:
+                logResult(Result.WIN, "Win", o);
+                break;
+            case Commands.LOSSES_COMMAND:
+                logResult(Result.LOSS, "Loss", o);
+                break;
+            case Commands.DRAWS_COMMAND:
+                logResult(Result.DRAW, "Draw", o);
+                break;
+            case Commands.MENU_COMMAND:
+                displayMenu();
+                break;
+            case Commands.QUIT_COMMAND:
+                quit();
+                break;
+            default:
+                throw new InvalidInputException();
+        }
+    }
+
+    private void logResult(final Result r, final String resultStr, Opening o) {
+        o.addUserResult(Side.WHITE, r);
+        System.out.println(resultStr + " added to" + o.getOpeningName());
+        returnToMenuPrompt();
+    }
+
+    // EFFECTS: returns the user's selected opening
+    private Opening inputSelection() throws InvalidInputException, NumberFormatException, EmptyDatabaseException {
+        getNextCommand();
+        if (openings.size() == 0) {
+            throw new EmptyDatabaseException();
+        } else if (0 <= Integer.parseInt(command) && Integer.parseInt(command) <= (openings.size() - 1)) {
+            return openings.get(Integer.parseInt(command));
         } else {
             throw new InvalidInputException();
         }
     }
 
-    // TODO
-    // EFFECTS: allows the user to select an opening from openings
-    private void selectOpening() {
-        System.out.println("Select your opening: ");
+    // SORT BY CRITERIA FUNCTIONS:
+
+    // MODIFIES: this
+    // EFFECTS: rearranges the database based on criteria
+    private void displayCriteria() {
+        System.out.println("\nWhich criteria do you want to sort by?");
+        System.out.println("\tw -> (w)ins");
+        System.out.println("\tl -> (l)osses");
+        System.out.println("\td -> (d)raws");
+        System.out.println("\tt -> (t)otal matches");
+        System.out.println("\tm -> return to (m)enu");
+        System.out.println("\tq -> (q)uit");
+
+        boolean keepGoing;
+
+        do {
+            try {
+                processCriteriaCommand();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Selection not valid. Please try again.");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: based on the user's input, chooses which criteria to sort the database by
+    private void processCriteriaCommand() throws InvalidInputException {
+
+        getNextCommand();
+
+        switch (command) {
+            case Commands.WIN_COMMAND:
+                sortByWins();
+                break;
+            case Commands.LOSSES_COMMAND:
+                sortByLosses();
+                break;
+            case Commands.DRAWS_COMMAND:
+                sortByDraws();
+                break;
+            case Commands.TOTAL_COMMAND:
+                sortByTotal();
+                break;
+            case Commands.MENU_COMMAND:
+                displayMenu();
+                break;
+            case Commands.QUIT_COMMAND:
+                quit();
+                break;
+            default:
+                throw new InvalidInputException();
+        }
+    }
+
+    // EFFECTS: returns the user's input on whether the list is to be sorted in ascending
+    private Boolean inputAscending() throws InvalidInputException {
+        boolean result;
+
+        getNextCommand();
+
+        switch (command) {
+            case Commands.ASCENDING_COMMAND:
+                result = true;
+                break;
+            case Commands.DESCENDING_COMMAND:
+                result = false;
+                break;
+            default:
+                throw new InvalidInputException();
+        }
+
+        return result;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sorts the list in ascending/descending order of wins, depending on the user's input
+    private void sortByWins() {
+
+        boolean isAscending = false;    // tracks whether the list is ascending
+
+        System.out.println("How would you like to sort by wins?");
+        System.out.println("\ta -> (a)scending");
+        System.out.println("\td -> (d)escending");
+
+        boolean keepGoing;
+
+        do {
+            try {
+                isAscending = inputAscending();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Please enter a valid input:");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+
+        if (isAscending) {
+            Collections.sort(openings, new LeastWinsComparator());
+            System.out.println("Opening database sorted by wins (ascending): ");
+        } else {
+            Collections.sort(openings, new MostWinsComparator());
+            System.out.println("Opening database sorted by wins (descending): ");
+        }
+
+        displayBrowse();
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: sorts the list in ascending/descending order of losses, depending on the user's input
+    private void sortByLosses() {
+        boolean isAscending = false;    // tracks whether the list is ascending
+
+        System.out.println("How would you like to sort by losses?");
+        System.out.println("\ta -> (a)scending");
+        System.out.println("\td -> (d)escending");
+
+        boolean keepGoing;
+
+        do {
+            try {
+                isAscending = inputAscending();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Please enter a valid input:");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+
+        if (isAscending) {
+            Collections.sort(openings, new LeastLosses());
+            System.out.println("Opening database sorted by losses (ascending): ");
+        } else {
+            Collections.sort(openings, new MostLosses());
+            System.out.println("Opening database sorted by losses (descending): ");
+        }
+
+        displayBrowse();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sorts the list in ascending/descending order of draws, depending on the user's input
+    private void sortByDraws() {
+        boolean isAscending = false;    // tracks whether the list is ascending
+
+        System.out.println("How would you like to sort by draws?");
+        System.out.println("\ta -> (a)scending");
+        System.out.println("\td -> (d)escending");
+
+        boolean keepGoing;
+
+        do {
+            try {
+                isAscending = inputAscending();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Please enter a valid input:");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+
+        if (isAscending) {
+            Collections.sort(openings, new LeastDraws());
+            System.out.println("Opening database sorted by draws (ascending): ");
+        } else {
+            Collections.sort(openings, new MostDraws());
+            System.out.println("Opening database sorted by draws (descending): ");
+        }
+
+        displayBrowse();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sorts the list in ascending/descending order of total matches, depending on the user's input
+    private void sortByTotal() {
+        boolean isAscending = false;    // tracks whether the list is ascending
+
+        System.out.println("How would you like to sort by total matches?");
+        System.out.println("\ta -> (a)scending");
+        System.out.println("\td -> (d)escending");
+
+        boolean keepGoing;
+
+        do {
+            try {
+                isAscending = inputAscending();
+                keepGoing = false;
+            } catch (InvalidInputException e) {
+                System.out.println("Please enter a valid input:");
+                keepGoing = true;
+            }
+        } while (keepGoing);
+
+
+
+        if (isAscending) {
+            Collections.sort(openings, new LeastMatches());
+            System.out.println("Opening database sorted by total matches (ascending): ");
+        } else {
+            Collections.sort(openings, new MostMatches());
+            System.out.println("Opening database sorted by total matches (descending): ");
+        }
+
+        displayBrowse();
     }
 
     // EFFECTS: quits the application
     private void quit() {
         System.out.println("Goodbye!");
     }
-
-    // MODIFIES: this
-    // EFFECTS: rearranges the database based on criteria
-    private void displayCriteria() throws InvalidInputException {
-        System.out.println("\nWhich criteria do you want to sort by?");
-        System.out.println("\tw -> (w)ins)");
-        System.out.println("\tl -> (l)osses)");
-        System.out.println("\td -> (d)raws)");
-        System.out.println("\tm -> return to (m)enu))");
-        System.out.println("\tq -> (q)uit");
-
-        getNextCommand();
-
-        try {
-            processCriteriaCommand();
-        } catch (InvalidInputException e) {
-            System.out.println("Selection not valid. Please try again.");
-            getNextCommand();
-            processCriteriaCommand();
-        }
-
-    }
-
-    // MODIFIES: this
-    // EFFECTS: based on the user's input, chooses which criteria to sort the database by
-    private void processCriteriaCommand() throws InvalidInputException {
-        if (command.equals(WIN_COMMAND)) {
-            sortByWins();
-        } else if (command.equals(LOSSES_COMMAND)) {
-            sortByLosses();
-        } else if (command.equals(DRAWS_COMMAND)) {
-            sortByDraws();
-        } else if (command.equals(MENU_COMMAND)) {
-            displayMenu();
-        } else if (command.equals(QUIT_COMMAND)) {
-            quit();
-        } else {
-            throw new InvalidInputException();
-        }
-    }
-
-    // TODO
-    private void sortByWins() {
-
-    }
-
-    // TODO
-    private void sortByLosses() {
-
-    }
-
-    // TODO
-    private void sortByDraws() {
-
-    }
-
-
-
 }

@@ -13,6 +13,7 @@ class OpeningTest {
     @BeforeEach
     public void runBefore() {
         testOpening = new Opening("Test Opening");
+
     }
 
     @Test
@@ -22,6 +23,16 @@ class OpeningTest {
         assertEquals(0, this.testOpening.getLossCount());
         assertEquals(0, this.testOpening.getDrawCount());
         assertEquals(0, this.testOpening.getTotalGames());
+    }
+
+    @Test
+    public void detailedConstructorTest() {
+        Opening testOpening2 = new Opening("SECOND TEST!!", 50, 30, 40);
+        assertEquals("SECOND TEST!!", testOpening2.getOpeningName());
+        assertEquals(50, testOpening2.getWinCount());
+        assertEquals(30, testOpening2.getLossCount());
+        assertEquals(40, testOpening2.getDrawCount());
+        assertEquals(120, testOpening2.getTotalGames());
     }
 
     @Test
@@ -41,8 +52,8 @@ class OpeningTest {
         assertEquals(0, this.testOpening.getLossCount());
         assertEquals(0, this.testOpening.getDrawCount());
         this.testOpening.setWinCount(20);
-        assertEquals(70, this.testOpening.getWinCount());
-        assertEquals(70, this.testOpening.getTotalGames());
+        assertEquals(20, this.testOpening.getWinCount());
+        assertEquals(20, this.testOpening.getTotalGames());
         assertEquals(0, this.testOpening.getLossCount());
         assertEquals(0, this.testOpening.getDrawCount());
     }
@@ -65,8 +76,8 @@ class OpeningTest {
         assertEquals(0, this.testOpening.getDrawCount());
         this.testOpening.setLossCount(20);
         assertEquals(0, this.testOpening.getWinCount());
-        assertEquals(70, this.testOpening.getTotalGames());
-        assertEquals(70, this.testOpening.getLossCount());
+        assertEquals(20, this.testOpening.getTotalGames());
+        assertEquals(20, this.testOpening.getLossCount());
         assertEquals(0, this.testOpening.getDrawCount());
     }
 
@@ -88,9 +99,9 @@ class OpeningTest {
         assertEquals(50, this.testOpening.getDrawCount());
         this.testOpening.setDrawCount(20);
         assertEquals(0, this.testOpening.getWinCount());
-        assertEquals(70, this.testOpening.getTotalGames());
+        assertEquals(20, this.testOpening.getTotalGames());
         assertEquals(0, this.testOpening.getLossCount());
-        assertEquals(70, this.testOpening.getDrawCount());
+        assertEquals(20, this.testOpening.getDrawCount());
     }
 
     @Test
@@ -144,11 +155,16 @@ class OpeningTest {
         assertEquals(3, this.testOpening.getTotalGames());
         assertEquals(0, this.testOpening.getLossCount());
         assertEquals(1, this.testOpening.getDrawCount());
-        this.testOpening.addUserResult(Side.WHITE, Result.DRAW);
+        this.testOpening.addUserResult(Side.WHITE, Result.LOSS);
         assertEquals(2, this.testOpening.getWinCount());
         assertEquals(4, this.testOpening.getTotalGames());
         assertEquals(1, this.testOpening.getLossCount());
         assertEquals(1, this.testOpening.getDrawCount());
+    }
+
+    @Test
+    public void displayInfoTest() {
+        this.testOpening.displayInfo();
     }
 
 }
