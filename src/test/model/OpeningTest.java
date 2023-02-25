@@ -167,4 +167,5 @@ class OpeningTest {
         this.testOpening.displayInfo();
     }
 
+
 }

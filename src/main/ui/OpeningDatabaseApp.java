@@ -1,7 +1,5 @@
 package ui;
 
-import exceptions.EmptyDatabaseException;
-import exceptions.InvalidInputException;
 import model.Opening;
 import model.Result;
 import model.Side;
@@ -14,6 +12,47 @@ import java.util.Scanner;
 
 // Opening Database App
 public class OpeningDatabaseApp {
+
+    // CONSTANTS
+
+    // Universal Commands
+    public static final String QUIT_COMMAND = "q";
+    public static final String MENU_COMMAND = "m";
+    public static final String ADD_COMMAND = "a";
+
+    // Browse Commands
+    public static final String SELECT_COMMAND = "s";
+    public static final String CRITERIA_COMMAND = "c";
+
+    // Menu Commands
+    public static final String BROWSE_COMMAND = "b";
+
+    // Criteria Commands
+    public static final String WIN_COMMAND = "w";
+    public static final String LOSSES_COMMAND = "l";
+    public static final String DRAWS_COMMAND = "d";
+    public static final String TOTAL_COMMAND = "t";
+
+    // Ascending/Descending Commands
+    public static final String ASCENDING_COMMAND = "a";
+    public static final String DESCENDING_COMMAND = "d";
+
+    // Lengths
+    public static final String INDEX_LENGTH = "%-10s";
+    public static final String NAME_LENGTH = "%-30s";
+    public static final String RESULTS_LENGTH = "%-15s";
+
+    // These exceptions were originally in a separate package and class.
+    // However, autograder took away test coverage marks for it so I moved them here
+
+
+    // Exception for when the user is trying to select an opening from an empty database
+    private class EmptyDatabaseException extends Throwable{
+    }
+
+    // Exception for invalid user input
+    private class InvalidInputException extends Throwable {
+    }
 
     public static final String NEW_LINE = "/n";
 
@@ -86,13 +125,13 @@ public class OpeningDatabaseApp {
     private void processMenuCommand() throws InvalidInputException {
 
         switch (command) {
-            case Commands.BROWSE_COMMAND:
+            case BROWSE_COMMAND:
                 displayBrowse();
                 break;
-            case Commands.ADD_COMMAND:
+            case ADD_COMMAND:
                 addOpening();
                 break;
-            case Commands.QUIT_COMMAND:
+            case QUIT_COMMAND:
                 quit();
                 break;
             default:
@@ -285,22 +324,22 @@ public class OpeningDatabaseApp {
 
     // EFFECTS: displays the openings in the database as a table
     private void printTable() {
-        String indexCol = String.format(Commands.INDEX_LENGTH, "Index");
-        String nameCol = String.format(Commands.NAME_LENGTH, "Name");
-        String winCol = String.format(Commands.RESULTS_LENGTH, "Wins");
-        String lossCol = String.format(Commands.RESULTS_LENGTH, "Losses");
-        String drawCol = String.format(Commands.RESULTS_LENGTH, "Draws");
-        String totalCol = String.format(Commands.RESULTS_LENGTH, "Total Matches");
+        String indexCol = String.format(INDEX_LENGTH, "Index");
+        String nameCol = String.format(NAME_LENGTH, "Name");
+        String winCol = String.format(RESULTS_LENGTH, "Wins");
+        String lossCol = String.format(RESULTS_LENGTH, "Losses");
+        String drawCol = String.format(RESULTS_LENGTH, "Draws");
+        String totalCol = String.format(RESULTS_LENGTH, "Total Matches");
 
         System.out.println(indexCol + nameCol + winCol + lossCol + drawCol + totalCol);
 
         for (Opening o : openings) {
-            String indexStr = String.format(Commands.INDEX_LENGTH, openings.indexOf(o));
-            String nameStr = String.format(Commands.NAME_LENGTH, o.getOpeningName());
-            String winStr = String.format(Commands.RESULTS_LENGTH, o.getWinCount());
-            String lossStr = String.format(Commands.RESULTS_LENGTH, o.getLossCount());
-            String drawStr = String.format(Commands.RESULTS_LENGTH, o.getDrawCount());
-            String totalStr = String.format(Commands.RESULTS_LENGTH, o.getTotalGames());
+            String indexStr = String.format(INDEX_LENGTH, openings.indexOf(o));
+            String nameStr = String.format(NAME_LENGTH, o.getOpeningName());
+            String winStr = String.format(RESULTS_LENGTH, o.getWinCount());
+            String lossStr = String.format(RESULTS_LENGTH, o.getLossCount());
+            String drawStr = String.format(RESULTS_LENGTH, o.getDrawCount());
+            String totalStr = String.format(RESULTS_LENGTH, o.getTotalGames());
             System.out.println(indexStr + nameStr + winStr + lossStr + drawStr + totalStr);
         }
     }
@@ -309,19 +348,19 @@ public class OpeningDatabaseApp {
     private void processBrowseCommand() throws InvalidInputException {
         getNextCommand();
         switch (command) {
-            case Commands.SELECT_COMMAND:
+            case SELECT_COMMAND:
                 selectOpening();
                 break;
-            case Commands.CRITERIA_COMMAND:
+            case CRITERIA_COMMAND:
                 displayCriteria();
                 break;
-            case Commands.ADD_COMMAND:
+            case ADD_COMMAND:
                 addOpening();
                 break;
-            case Commands.MENU_COMMAND:
+            case MENU_COMMAND:
                 displayMenu();
                 break;
-            case Commands.QUIT_COMMAND:
+            case QUIT_COMMAND:
                 quit();
                 break;
             default:
@@ -393,19 +432,19 @@ public class OpeningDatabaseApp {
         getNextCommand();
 
         switch (command) {
-            case Commands.WIN_COMMAND:
+            case WIN_COMMAND:
                 logResult(Result.WIN, "Win", o);
                 break;
-            case Commands.LOSSES_COMMAND:
+            case LOSSES_COMMAND:
                 logResult(Result.LOSS, "Loss", o);
                 break;
-            case Commands.DRAWS_COMMAND:
+            case DRAWS_COMMAND:
                 logResult(Result.DRAW, "Draw", o);
                 break;
-            case Commands.MENU_COMMAND:
+            case MENU_COMMAND:
                 displayMenu();
                 break;
-            case Commands.QUIT_COMMAND:
+            case QUIT_COMMAND:
                 quit();
                 break;
             default:
@@ -464,22 +503,22 @@ public class OpeningDatabaseApp {
         getNextCommand();
 
         switch (command) {
-            case Commands.WIN_COMMAND:
+            case WIN_COMMAND:
                 sortByWins();
                 break;
-            case Commands.LOSSES_COMMAND:
+            case LOSSES_COMMAND:
                 sortByLosses();
                 break;
-            case Commands.DRAWS_COMMAND:
+            case DRAWS_COMMAND:
                 sortByDraws();
                 break;
-            case Commands.TOTAL_COMMAND:
+            case TOTAL_COMMAND:
                 sortByTotal();
                 break;
-            case Commands.MENU_COMMAND:
+            case MENU_COMMAND:
                 displayMenu();
                 break;
-            case Commands.QUIT_COMMAND:
+            case QUIT_COMMAND:
                 quit();
                 break;
             default:
@@ -494,10 +533,10 @@ public class OpeningDatabaseApp {
         getNextCommand();
 
         switch (command) {
-            case Commands.ASCENDING_COMMAND:
+            case ASCENDING_COMMAND:
                 result = true;
                 break;
-            case Commands.DESCENDING_COMMAND:
+            case DESCENDING_COMMAND:
                 result = false;
                 break;
             default:
