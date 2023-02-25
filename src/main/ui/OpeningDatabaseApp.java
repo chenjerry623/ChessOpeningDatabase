@@ -18,11 +18,11 @@ public class OpeningDatabaseApp {
     public static final String NEW_LINE = "/n";
 
     // Fields to store values for new openings being created
-    String tempName;
-    int tempWins;
-    int tempLosses;
-    int tempDraws;
-    Opening newOpening;
+    private String tempName;
+    private int tempWins;
+    private int tempLosses;
+    private int tempDraws;
+    private Opening newOpening;
 
     private List<Opening> openings; // current opening database
 
@@ -32,15 +32,15 @@ public class OpeningDatabaseApp {
 
     // EFFECTS: runs the opening database application
     public OpeningDatabaseApp() {
-        runApp();
     }
 
-    private void runApp() {
+    public void runApp() {
         init();
 
         displayMenu();
     }
 
+    // MODIFIES: this
     // EFFECTS: initializes the opening database and scanner
     private void init() {
         openings = new ArrayList<>();
@@ -49,10 +49,10 @@ public class OpeningDatabaseApp {
     }
 
     // MODIFIES: this
-    // EFFECTS:
+    // EFFECTS: sets command to the latest input, setting it to lowercase for easier interpretation
     private void getNextCommand() {
         command = input.nextLine();
-        command = command.toLowerCase();    // convert the command to lowercase, makes handling inputs easier
+        command = command.toLowerCase();
     }
 
     // MENU FUNCTIONS
@@ -100,6 +100,7 @@ public class OpeningDatabaseApp {
         }
     }
 
+    // MODIFIES: this
     // EFFECTS: prompts the user to return to the main menu if any key is entered
     private void returnToMenuPrompt() {
         System.out.println("Enter any key to return to the main menu.");
@@ -562,10 +563,10 @@ public class OpeningDatabaseApp {
         } while (keepGoing);
 
         if (isAscending) {
-            Collections.sort(openings, new LeastLosses());
+            Collections.sort(openings, new LeastLossesComparator());
             System.out.println("Opening database sorted by losses (ascending): ");
         } else {
-            Collections.sort(openings, new MostLosses());
+            Collections.sort(openings, new MostLossesComparator());
             System.out.println("Opening database sorted by losses (descending): ");
         }
 
@@ -594,10 +595,10 @@ public class OpeningDatabaseApp {
         } while (keepGoing);
 
         if (isAscending) {
-            Collections.sort(openings, new LeastDraws());
+            Collections.sort(openings, new LeastDrawsComparator());
             System.out.println("Opening database sorted by draws (ascending): ");
         } else {
-            Collections.sort(openings, new MostDraws());
+            Collections.sort(openings, new MostDrawsComparator());
             System.out.println("Opening database sorted by draws (descending): ");
         }
 
@@ -628,10 +629,10 @@ public class OpeningDatabaseApp {
 
 
         if (isAscending) {
-            Collections.sort(openings, new LeastMatches());
+            Collections.sort(openings, new LeastMatchesComparator());
             System.out.println("Opening database sorted by total matches (ascending): ");
         } else {
-            Collections.sort(openings, new MostMatches());
+            Collections.sort(openings, new MostMatchesComparator());
             System.out.println("Opening database sorted by total matches (descending): ");
         }
 

@@ -4,9 +4,9 @@ import model.Opening;
 
 import java.util.Comparator;
 
-public class LeastDraws implements Comparator<Opening> {
+public class MostLossesComparator implements Comparator<Opening> {
     @Override
     public int compare(Opening o1, Opening o2) {
-        return o1.getDrawCount().compareTo(o2.getDrawCount());
+        return o2.getLossCount().compareTo(o1.getLossCount());
     }
 }

@@ -6,10 +6,7 @@ This is a program capable of storing/loading databases of chess openings.
 These databases can be used to store notes on the user's:
 - success rate with an opening 
   - win/loss/draw count
-  - win/loss/draw ratio
-- memorization 
-  - how many moves deep have I memorized this opening?
-  - how much memorization do I need in order to play this opening well?
+
 
 
 The database will also allow the user to add or edit information on openings 
@@ -27,6 +24,6 @@ and results with an opening.
 
 **User Stories**
 - As a user, I want to see which openings I've won the most games with
-- As a user, I want to see which openings I've memorized the most moves for
+- As a user, I want to sort my openings in descending order of losses
 - As a user, I want to add a new opening line to the database
 - As a user, I want to add a win to the win count of an opening

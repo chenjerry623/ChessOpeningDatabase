@@ -4,9 +4,9 @@ import model.Opening;
 
 import java.util.Comparator;
 
-public class LeastMatches implements Comparator<Opening> {
+public class MostMatchesComparator implements Comparator<Opening> {
     @Override
     public int compare(Opening o1, Opening o2) {
-        return o1.getTotalGames().compareTo(o2.getTotalGames());
+        return o2.getTotalGames().compareTo(o1.getTotalGames());
     }
 }
