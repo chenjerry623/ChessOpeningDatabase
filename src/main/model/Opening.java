@@ -1,13 +1,11 @@
 package model;
 
-import java.util.Comparator;
-
 // represents a single chess opening, with info on the name, win/loss/draws, memorization, tendencies and lines
 public class Opening {
 
     // LAST FILE VERSION WITH OPTIONAL VARIABLES
 
-    private String openingName;         // the name of the opening
+    private final String openingName;         // the name of the opening
 
     private int winCount;               // user's total amount of wins with the opening
     private int lossCount;              // user's total amount of losses with the opening
@@ -45,9 +43,13 @@ public class Opening {
         return drawCount;
     }
 
-    // EFFECTS: returns the sum of the win, loss and draw count
-    public Integer getTotalGames() {
-        return winCount + lossCount + drawCount;
+    // EFFECTS: returns the sum of the win, loss and draw count. Returns as a long in case of max int size
+    public Long getTotalGames() {
+        long longWins = winCount;
+        long longLosses = lossCount;
+        long longDraws = drawCount;
+
+        return longWins + longLosses + longDraws;
     }
 
     public String getOpeningName() {

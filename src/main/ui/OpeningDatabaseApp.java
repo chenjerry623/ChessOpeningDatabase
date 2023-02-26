@@ -12,10 +12,10 @@ import java.util.Scanner;
 // Opening Database App
 public class OpeningDatabaseApp {
 
-    private class InvalidInputException extends Throwable {
+    private static class InvalidInputException extends Throwable {
     }
 
-    private class EmptyDatabaseException extends Throwable{
+    private static class EmptyDatabaseException extends Throwable{
     }
 
     // Universal Commands
@@ -74,9 +74,7 @@ public class OpeningDatabaseApp {
 
     // EFFECTS: returns the user's latest input line. Used for inputting strings and ints
     private String getNextUserInput() {
-
-        String userInput = input.nextLine();
-        return userInput;
+        return input.nextLine();
     }
 
     // EFFECTS: returns the user's command, throwing an exception if the command is invalid.
