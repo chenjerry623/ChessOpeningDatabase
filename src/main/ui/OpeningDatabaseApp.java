@@ -443,7 +443,7 @@ public class OpeningDatabaseApp {
         System.out.println("\tw -> add a (w)in");
         System.out.println("\tl -> add a (l)oss");
         System.out.println("\td -> add a (d)raw");
-        System.out.println("\tm -> return to (m)enu)");
+        System.out.println("\tm -> return to (m)enu");
         System.out.println("\tq -> (q)uit");
 
         boolean keepGoing;
