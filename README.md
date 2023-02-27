@@ -26,6 +26,5 @@ and find the most success with.
 **User Stories**
 - As a user, I want to view my win/loss/draws and total games with an opening
 - As a user, I want to sort my openings in ascending/descending order of wins/losses/draws/matches
-- As a user, I want to add a new opening to the database
+- As a user, I want to add multiple new openings to the database
 - As a user, I want to add a result to an opening
-- As a user, I want to view an overview of all the openings in the database
