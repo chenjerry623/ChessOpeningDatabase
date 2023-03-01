@@ -3,8 +3,13 @@ package ui;
 import model.Opening;
 import model.Result;
 import model.Side;
+
+import persistence.*;
+
 import utility.*;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +22,11 @@ public class OpeningDatabaseApp {
 
     private static class EmptyDatabaseException extends Throwable{
     }
+
+    private static final String JSON_STORE = "./data/databasefile.json";
+
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
 
     // Universal Commands
     public static final char QUIT_COMMAND = 'q';
@@ -31,6 +41,8 @@ public class OpeningDatabaseApp {
 
     // Menu Commands
     public static final char BROWSE_COMMAND = 'b';
+    public static final char SAVE_COMMAND = 's';
+    public static final char LOAD_COMMAND = 'l';
 
     // Criteria Commands
     public static final char WIN_COMMAND = 'w';
@@ -65,11 +77,13 @@ public class OpeningDatabaseApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the opening database and scanner
+    // EFFECTS: initializes the opening database, scanner and json reader/writer
     private void init() {
         openings = new ArrayList<>();
         input = new Scanner(System.in);
         input.useDelimiter(NEW_LINE);   // tells the scanner to use new lines to separate inputs
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // EFFECTS: returns the user's latest input line. Used for inputting strings and ints
@@ -123,9 +137,11 @@ public class OpeningDatabaseApp {
             System.out.println("\nWhat do you want to do?");
             System.out.println("\tb -> (b)rowse your openings");
             System.out.println("\ta -> (a)dd an opening");
+            System.out.println("\ts -> (s)ave database");
+            System.out.println("\tl -> (l)oad database");
             System.out.println("\tq -> (q)uit");
 
-            final char[] options = { ADD_COMMAND, BROWSE_COMMAND, QUIT_COMMAND};
+            final char[] options = { ADD_COMMAND, BROWSE_COMMAND, QUIT_COMMAND, SAVE_COMMAND, LOAD_COMMAND};
             final char command = getNextCommand(options);
 
             try {
@@ -149,6 +165,12 @@ public class OpeningDatabaseApp {
                 break;
             case ADD_COMMAND:
                 addOpening();
+                break;
+            case SAVE_COMMAND:
+                saveOpenings();
+                break;
+            case LOAD_COMMAND:
+                loadOpenings();
                 break;
             case QUIT_COMMAND:
                 quit();
@@ -491,7 +513,7 @@ public class OpeningDatabaseApp {
     // EFFECTS: adds the result r to the opening's result count
     private void logResult(final Result r, final String resultStr, Opening o) {
         o.addUserResult(Side.WHITE, r);
-        System.out.println(resultStr + " added to" + o.getOpeningName());
+        System.out.println(resultStr + " added to " + o.getOpeningName());
         returnToMenuPrompt();
     }
 
@@ -723,6 +745,37 @@ public class OpeningDatabaseApp {
 
         displayBrowse();
     }
+
+    // SAVE/LOAD FUNCTIONS
+
+    // EFFECTS: saves the opening database as a json file in the data folder
+    private void saveOpenings() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(openings);
+            jsonWriter.close();
+
+            System.out.println("Saved opening database to" + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        } finally {
+            displayMenu();
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads opening database from file
+    private void loadOpenings() {
+        try {
+            openings = jsonReader.read();
+            System.out.println("Loaded openings from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        } finally {
+            displayMenu();
+        }
+    }
+    // TODO: UI FOR SAVING AND LOADING
 
     // EFFECTS: quits the application
     private void quit() {

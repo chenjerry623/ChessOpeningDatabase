@@ -1,7 +1,10 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // represents a single chess opening, with info on the name, win/loss/draws, memorization, tendencies and lines
-public class Opening {
+public class Opening implements Writable {
 
     // LAST FILE VERSION WITH OPTIONAL VARIABLES
 
@@ -107,7 +110,15 @@ public class Opening {
         }
     }
 
-
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("opening name", this.openingName);
+        json.put("wins", this.winCount);
+        json.put("draws", this.drawCount);
+        json.put("losses", this.lossCount);
+        return json;
+    }
 
 
 }
