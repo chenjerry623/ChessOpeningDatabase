@@ -57,5 +57,4 @@ public class JsonWriter {
         writer.print(json);
     }
 
-    // TODO: add loader
 }

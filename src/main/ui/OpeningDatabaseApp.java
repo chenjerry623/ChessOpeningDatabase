@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Scanner;
 
 // Opening Database App
+// Citation: save/load section is referenced and based on the example JsonSerializationDemo provided on edx
 public class OpeningDatabaseApp {
 
     private static class InvalidInputException extends Throwable {
@@ -775,7 +776,6 @@ public class OpeningDatabaseApp {
             displayMenu();
         }
     }
-    // TODO: UI FOR SAVING AND LOADING
 
     // EFFECTS: quits the application
     private void quit() {

@@ -1,3 +1,6 @@
+// Citation: referenced and based on the example JsonSerializationDemo provided on edx
+
+
 package persistence;
 
 import model.Opening;
@@ -14,7 +17,7 @@ import java.util.stream.Stream;
 
 // Represents a reader that reads workroom from JSON data stored in file
 public class JsonReader {
-    private String source;
+    private final String source;
 
     // EFFECTS: constructs reader to read from source file
     public JsonReader(String source) {
@@ -42,7 +45,7 @@ public class JsonReader {
 
     // EFFECTS: parses workroom from JSON object and returns it
     private List<Opening> parseOpeningList(JSONObject jsonObject) {
-        List<Opening> openings = new ArrayList<Opening>();
+        List<Opening> openings = new ArrayList<>();
         addOpenings(openings, jsonObject);
         return openings;
     }
@@ -67,5 +70,6 @@ public class JsonReader {
         Opening newOpening = new Opening(name, wins, losses, draws);
         openings.add(newOpening);
     }
-    // TODO citation and tests
+    // TODO tests
+    // TODO check if i need actual citation formatting
 }

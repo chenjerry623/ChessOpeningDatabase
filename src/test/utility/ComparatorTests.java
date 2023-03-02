@@ -1,5 +1,6 @@
-package model;
+package utility;
 
+import model.Opening;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import utility.*;
