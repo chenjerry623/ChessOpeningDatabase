@@ -1,4 +1,4 @@
-// TODO CITATION
+// Citation: referenced and based on the example JsonSerializationDemo provided on edx
 
 package persistence;
 
@@ -16,7 +16,7 @@ class JsonReaderTest extends OpeningValueTester {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("data/noSuchFile.json");
         try {
-            List<Opening> o = reader.read();
+            List<Opening> testDatabase = reader.read();
             fail("IOException expected");
         } catch (IOException e) {
             // pass
@@ -27,7 +27,7 @@ class JsonReaderTest extends OpeningValueTester {
     void testReaderEmptyWorkRoom() {
         JsonReader reader = new JsonReader("data/testReaderEmptyDatabase.json");
         try {
-            List<Opening> o = reader.read();
+            List<Opening> testDatabase = reader.read();
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
@@ -37,10 +37,10 @@ class JsonReaderTest extends OpeningValueTester {
     void testReaderGeneralWorkRoom() {
         JsonReader reader = new JsonReader("data/testReaderGeneralDatabase.json");
         try {
-            List<Opening> o = reader.read();
-            assertEquals(2, o.size());
-            checkOpening(o.get(0), "test one", 70, 48, 29);
-            checkOpening(o.get(1), "test 2", 59, 30, 28);
+            List<Opening> testDatabase = reader.read();
+            assertEquals(2, testDatabase.size());
+            checkOpening(testDatabase.get(0), "test one", 70, 48, 29);
+            checkOpening(testDatabase.get(1), "test 2", 59, 30, 28);
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

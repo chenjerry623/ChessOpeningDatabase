@@ -1,3 +1,5 @@
+// Citation: referenced and based on the example JsonSerializationDemo provided on edx
+
 package model;
 
 
