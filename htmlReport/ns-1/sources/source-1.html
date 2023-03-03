@@ -1,0 +1,230 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > Opening</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">model</a>
+</div>
+
+<h1>Coverage Summary for Class: Opening (model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Opening</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    91.7%
+  </span>
+  <span class="absValue">
+    (11/12)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    74.2%
+  </span>
+  <span class="absValue">
+    (23/31)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package model;
+&nbsp;
+&nbsp;import java.util.Comparator;
+&nbsp;
+&nbsp;// represents a single chess opening, with info on the name, win/loss/draws, memorization, tendencies and lines
+&nbsp;public class Opening {
+&nbsp;
+&nbsp;    // LAST FILE VERSION WITH OPTIONAL VARIABLES
+&nbsp;
+&nbsp;    private String openingName;         // the name of the opening
+&nbsp;
+&nbsp;    private int winCount;               // user&#39;s total amount of wins with the opening
+&nbsp;    private int lossCount;              // user&#39;s total amount of losses with the opening
+&nbsp;    private int drawCount;              // user&#39;s total amount of draws
+&nbsp;
+&nbsp;    // TODO
+&nbsp;    // REQUIRES: name has a non-zero length
+&nbsp;    // EFFECTS: openingName is set to name, every other variable is set to 0
+<b class="fc">&nbsp;    public Opening(String name) {</b>
+<b class="fc">&nbsp;        this.openingName = name;</b>
+<b class="fc">&nbsp;        this.winCount = 0;</b>
+<b class="fc">&nbsp;        this.lossCount = 0;</b>
+<b class="fc">&nbsp;        this.drawCount = 0;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // REQUIRES: name has a non-zero length; wins, losses and draws must be &gt;= 0
+&nbsp;    // EFFECTS: openingName set to name; win/loss/draw parameters set according to inputs
+<b class="fc">&nbsp;    public Opening(String name, int wins, int losses, int draws) {</b>
+<b class="fc">&nbsp;        this.openingName = name;</b>
+<b class="fc">&nbsp;        this.winCount = wins;</b>
+<b class="fc">&nbsp;        this.lossCount = losses;</b>
+<b class="fc">&nbsp;        this.drawCount = draws;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // GETTERS:
+&nbsp;
+&nbsp;    public Integer getWinCount() {
+<b class="fc">&nbsp;        return winCount;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Integer getLossCount() {
+<b class="fc">&nbsp;        return lossCount;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public Integer getDrawCount() {
+<b class="fc">&nbsp;        return drawCount;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // TODO ADD THIS TO THE UI
+&nbsp;    // EFFECTS: returns the sum of the win, loss and draw count
+&nbsp;    public Integer getTotalGames() {
+<b class="fc">&nbsp;        return winCount + lossCount + drawCount;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public String getOpeningName() {
+<b class="fc">&nbsp;        return this.openingName;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // SETTERS
+&nbsp;
+&nbsp;    // REQUIRES: count &gt;= 0
+&nbsp;    // MODIFIES: this
+&nbsp;    // EFFECTS: sets the win count to count, adds (winCount - count) to total win count
+&nbsp;    public void setWinCount(int count) {
+<b class="fc">&nbsp;        this.winCount = count;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // REQUIRES: count &gt;= 0
+&nbsp;    // MODIFIES: this
+&nbsp;    // EFFECTS: sets the loss count to count, adds (winCount - count) to total loss count
+&nbsp;    public void setLossCount(int count) {
+<b class="fc">&nbsp;        this.lossCount = count;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // REQUIRES: count &gt;= 0
+&nbsp;    // MODIFIES: this
+&nbsp;    // EFFECTS: sets the loss count to count, adds (winCount - count) to total loss count
+&nbsp;    public void setDrawCount(int count) {
+<b class="fc">&nbsp;        this.drawCount = count;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // EFFECTS: displays information about this opening
+&nbsp;    public void displayInfo() {
+<b class="nc">&nbsp;        String s1 = &quot;\\\\\\\\\\\\\\\\ &quot;;</b>
+<b class="nc">&nbsp;        String s2 = &quot; ////////&quot;;</b>
+<b class="nc">&nbsp;        System.out.println(s1 + openingName + s2);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;================================================================&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Wins:          &quot; + winCount);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Draws:         &quot; + drawCount);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Losses:        &quot; + winCount);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Total Matches: &quot; + this.getTotalGames());</b>
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    // FUNCTION METHODS:
+&nbsp;
+&nbsp;    // note: the side parameter isn&#39;t currently used, but will be kept in case it&#39;s implemented later
+&nbsp;
+&nbsp;    // REQUIRES: side is either WHITE or BLACK, result is either WIN, LOSS or DRAW
+&nbsp;    // MODIFIES: this
+&nbsp;    // EFFECTS: adds a win/loss to the opening
+&nbsp;    public void addUserResult(Side side, Result result) {
+<b class="fc">&nbsp;        if (result == Result.WIN) {</b>
+<b class="fc">&nbsp;            winCount++;</b>
+<b class="fc">&nbsp;        } else if (result == Result.DRAW) {</b>
+<b class="fc">&nbsp;            drawCount++;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            lossCount++;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-02-24 22:30</div>
+</div>
+</body>
+</html>

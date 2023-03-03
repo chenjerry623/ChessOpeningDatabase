@@ -1,0 +1,14 @@
+{"openings": [
+    {
+        "wins": 40,
+        "draws": 30,
+        "opening name": "test1",
+        "losses": 50
+    },
+    {
+        "wins": 38,
+        "draws": 21,
+        "opening name": "test2",
+        "losses": 46
+    }
+]}
