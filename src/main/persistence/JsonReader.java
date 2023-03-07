@@ -4,6 +4,7 @@
 package persistence;
 
 import model.Opening;
+import model.OpeningDatabase;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -11,8 +12,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 // Represents a reader that reads workroom from JSON data stored in file
@@ -26,7 +25,7 @@ public class JsonReader {
 
     // EFFECTS: reads workroom from file and returns it;
     // throws IOException if an error occurs reading data from file
-    public List<Opening> read() throws IOException {
+    public OpeningDatabase read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseOpeningList(jsonObject);
@@ -44,25 +43,26 @@ public class JsonReader {
     }
 
     // EFFECTS: parses workroom from JSON object and returns it
-    private List<Opening> parseOpeningList(JSONObject jsonObject) {
-        List<Opening> openings = new ArrayList<>();
+    private OpeningDatabase parseOpeningList(JSONObject jsonObject) {
+        OpeningDatabase openings = new OpeningDatabase();
         addOpenings(openings, jsonObject);
         return openings;
     }
 
     // MODIFIES: wr
     // EFFECTS: parses thingies from JSON object and adds them to workroom
-    private void addOpenings(List<Opening> openings, JSONObject jsonObject) {
+    private void addOpenings(OpeningDatabase openings, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("openings");
         for (Object json : jsonArray) {
             JSONObject nextOpening = (JSONObject) json;
             addNewOpening(openings, nextOpening);
         }
+
     }
 
     // MODIFIES: wr
     // EFFECTS: parses thingy from JSON object and adds it to workroom
-    private void addNewOpening(List<Opening> openings, JSONObject jsonObject) {
+    private void addNewOpening(OpeningDatabase openings, JSONObject jsonObject) {
         String name = jsonObject.getString("opening name");
         int wins = jsonObject.getInt("wins");
         int draws = jsonObject.getInt("draws");

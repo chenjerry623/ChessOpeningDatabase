@@ -1,15 +1,9 @@
 {"openings": [
     {
-        "wins": 70,
-        "draws": 29,
-        "opening name": "sussy balls",
-        "losses": 48
-    },
-    {
-        "wins": 59,
-        "draws": 28,
-        "opening name": "sus imposter",
-        "losses": 30
+        "wins": 1,
+        "draws": 0,
+        "opening name": "amongus crewmate",
+        "losses": 1
     },
     {
         "wins": 3,
@@ -18,9 +12,21 @@
         "losses": 4
     },
     {
-        "wins": 1,
-        "draws": 0,
-        "opening name": "amongus crewmate",
-        "losses": 1
+        "wins": 59,
+        "draws": 28,
+        "opening name": "sus imposter",
+        "losses": 30
+    },
+    {
+        "wins": 70,
+        "draws": 29,
+        "opening name": "sussy balls",
+        "losses": 48
+    },
+    {
+        "wins": 49,
+        "draws": 49,
+        "opening name": "wefw",
+        "losses": 20
     }
 ]}

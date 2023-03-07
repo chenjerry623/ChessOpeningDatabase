@@ -4,7 +4,7 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 // represents a single chess opening, with info on the name, win/loss/draws, memorization, tendencies and lines
-public class Opening implements Writable {
+public class Opening implements Writable, Constants {
 
     // LAST FILE VERSION WITH OPTIONAL VARIABLES
 

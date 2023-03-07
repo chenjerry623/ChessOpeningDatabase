@@ -6,7 +6,6 @@ import model.*;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,7 +15,7 @@ class JsonReaderTest extends OpeningValueTester {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("data/noSuchFile.json");
         try {
-            List<Opening> testDatabase = reader.read();
+            OpeningDatabase testDatabase = reader.read();
             fail("IOException expected");
         } catch (IOException e) {
             // pass
@@ -27,7 +26,7 @@ class JsonReaderTest extends OpeningValueTester {
     void testReaderEmptyWorkRoom() {
         JsonReader reader = new JsonReader("data/testReaderEmptyDatabase.json");
         try {
-            List<Opening> testDatabase = reader.read();
+            OpeningDatabase testDatabase = reader.read();
         } catch (IOException e) {
             fail("Couldn't read from file");
         }
@@ -37,10 +36,10 @@ class JsonReaderTest extends OpeningValueTester {
     void testReaderGeneralWorkRoom() {
         JsonReader reader = new JsonReader("data/testReaderGeneralDatabase.json");
         try {
-            List<Opening> testDatabase = reader.read();
-            assertEquals(2, testDatabase.size());
-            checkOpening(testDatabase.get(0), "test one", 70, 48, 29);
-            checkOpening(testDatabase.get(1), "test 2", 59, 30, 28);
+            OpeningDatabase testDatabase = reader.read();
+            assertEquals(2, testDatabase.getSize());
+            checkOpening(testDatabase.getOpening(0), "test one", 70, 48, 29);
+            checkOpening(testDatabase.getOpening(1), "test 2", 59, 30, 28);
         } catch (IOException e) {
             fail("Couldn't read from file");
         }

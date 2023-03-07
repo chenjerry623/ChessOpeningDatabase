@@ -2,13 +2,12 @@
 
 package persistence;
 
-import model.Opening;
+import model.OpeningDatabase;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.List;
 
 // Represents a writer that writes JSON representation of workroom to file
 public class JsonWriter {
@@ -31,13 +30,15 @@ public class JsonWriter {
     // TODO: Write tests
     // MODIFIES: this
     // EFFECTS: writes JSON representation of workroom to file
-    public void write(List<Opening> database) {
+    public void write(OpeningDatabase database) {
         JSONObject json = new JSONObject();
         JSONArray jsonArray = new JSONArray();
 
-        for (Opening t : database) {
-            jsonArray.put(t.toJson());
+
+        for (int i = 0; i < database.getSize(); i++) {
+            jsonArray.put(database.getOpening(i).toJson());
         }
+
 
         json.put("openings", jsonArray);
 

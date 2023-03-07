@@ -1,8 +1,6 @@
 package ui;
 
-import model.Opening;
-import model.Result;
-import model.Side;
+import model.*;
 
 import persistence.*;
 
@@ -10,13 +8,11 @@ import utility.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 // Opening Database App
 // Citation: save/load section is referenced and based on the example JsonSerializationDemo provided on edx
-public class OpeningDatabaseApp {
+public class OpeningDatabaseApp implements Constants {
 
     private static class InvalidInputException extends Throwable {
     }
@@ -29,42 +25,10 @@ public class OpeningDatabaseApp {
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    // Universal Commands
-    public static final char QUIT_COMMAND = 'q';
-    public static final char MENU_COMMAND = 'm';
-    public static final char ADD_COMMAND = 'a';
-    public static final char ADD_ADDITION_INFO = 'y';
-    public static final char NO_COMMAND = 'n';
-
-    // Browse Commands
-    public static final char SELECT_COMMAND = 's';
-    public static final char CRITERIA_COMMAND = 'c';
-
-    // Menu Commands
-    public static final char BROWSE_COMMAND = 'b';
-    public static final char SAVE_COMMAND = 's';
-    public static final char LOAD_COMMAND = 'l';
-
-    // Criteria Commands
-    public static final char WIN_COMMAND = 'w';
-    public static final char LOSSES_COMMAND = 'l';
-    public static final char DRAWS_COMMAND = 'd';
-    public static final char TOTAL_COMMAND = 't';
-
-    // Ascending/Descending Commands
-    public static final char ASCENDING_COMMAND = 'a';
-    public static final char DESCENDING_COMMAND = 'd';
-
-    // Lengths
-    public static final String INDEX_LENGTH = "%-10s";
-    public static final String NAME_LENGTH = "%-30s";
-    public static final String RESULTS_LENGTH = "%-15s";
-
-    public static final String NEW_LINE = "/n";
 
     // Fields to store values for new openings being created
 
-    private List<Opening> openings; // current opening database
+    private OpeningDatabase openings; // current opening database
 
     private Scanner input;          // tracks the user's input
 
@@ -80,7 +44,7 @@ public class OpeningDatabaseApp {
     // MODIFIES: this
     // EFFECTS: initializes the opening database, scanner and json reader/writer
     private void init() {
-        openings = new ArrayList<>();
+        openings = new OpeningDatabase();
         input = new Scanner(System.in);
         input.useDelimiter(NEW_LINE);   // tells the scanner to use new lines to separate inputs
         jsonWriter = new JsonWriter(JSON_STORE);
@@ -385,15 +349,7 @@ public class OpeningDatabaseApp {
 
         System.out.println(indexCol + nameCol + winCol + lossCol + drawCol + totalCol);
 
-        for (Opening o : openings) {
-            String indexStr = String.format(INDEX_LENGTH, openings.indexOf(o));
-            String nameStr = String.format(NAME_LENGTH, o.getOpeningName());
-            String winStr = String.format(RESULTS_LENGTH, o.getWinCount());
-            String lossStr = String.format(RESULTS_LENGTH, o.getLossCount());
-            String drawStr = String.format(RESULTS_LENGTH, o.getDrawCount());
-            String totalStr = String.format(RESULTS_LENGTH, o.getTotalGames());
-            System.out.println(indexStr + nameStr + winStr + lossStr + drawStr + totalStr);
-        }
+        openings.printOpenings();
     }
 
     // MODIFIES: this
@@ -521,10 +477,10 @@ public class OpeningDatabaseApp {
     // EFFECTS: returns the user's selected opening
     private Opening inputSelection() throws InvalidInputException, NumberFormatException, EmptyDatabaseException {
         final String userInput = getNextUserInput();
-        if (openings.size() == 0) {
+        if (openings.getSize() == 0) {
             throw new EmptyDatabaseException();
-        } else if (0 <= Integer.parseInt(userInput) && Integer.parseInt(userInput) <= (openings.size() - 1)) {
-            return openings.get(Integer.parseInt(userInput));
+        } else if (0 <= Integer.parseInt(userInput) && Integer.parseInt(userInput) <= (openings.getSize() - 1)) {
+            return openings.getOpening(Integer.parseInt(userInput));
         } else {
             throw new InvalidInputException();
         }
@@ -638,10 +594,10 @@ public class OpeningDatabaseApp {
         } while (keepGoing);
 
         if (isAscending) {
-            openings.sort(new LeastWinsComparator());
+            openings.sortOpenings(new LeastWinsComparator());
             System.out.println("Opening database sorted by wins (ascending): ");
         } else {
-            openings.sort(new MostWinsComparator());
+            openings.sortOpenings(new MostWinsComparator());
             System.out.println("Opening database sorted by wins (descending): ");
         }
 
@@ -671,10 +627,10 @@ public class OpeningDatabaseApp {
         } while (keepGoing);
 
         if (isAscending) {
-            openings.sort(new LeastLossesComparator());
+            openings.sortOpenings(new LeastLossesComparator());
             System.out.println("Opening database sorted by losses (ascending): ");
         } else {
-            openings.sort(new MostLossesComparator());
+            openings.sortOpenings(new MostLossesComparator());
             System.out.println("Opening database sorted by losses (descending): ");
         }
 
@@ -703,10 +659,10 @@ public class OpeningDatabaseApp {
         } while (keepGoing);
 
         if (isAscending) {
-            openings.sort(new LeastDrawsComparator());
+            openings.sortOpenings(new LeastDrawsComparator());
             System.out.println("Opening database sorted by draws (ascending): ");
         } else {
-            openings.sort(new MostDrawsComparator());
+            openings.sortOpenings(new MostDrawsComparator());
             System.out.println("Opening database sorted by draws (descending): ");
         }
 
@@ -737,10 +693,10 @@ public class OpeningDatabaseApp {
 
 
         if (isAscending) {
-            openings.sort(new LeastMatchesComparator());
+            openings.sortOpenings(new LeastMatchesComparator());
             System.out.println("Opening database sorted by total matches (ascending): ");
         } else {
-            openings.sort(new MostMatchesComparator());
+            openings.sortOpenings(new MostMatchesComparator());
             System.out.println("Opening database sorted by total matches (descending): ");
         }
 
