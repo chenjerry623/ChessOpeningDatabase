@@ -160,7 +160,7 @@ public class OpeningDatabaseApp implements Constants {
     // EFFECTS: prompts the user to input a new opening and adds it to openings
     private void addOpening() throws NumberFormatException {
 
-        openings.add(makeOpening());
+        openings.addOpening(makeOpening());
 
         System.out.println("Opening successfully added, returning to menu...");
 

@@ -45,8 +45,8 @@ class JsonWriterTest extends OpeningValueTester {
     void testWriterGeneralWorkroom() {
         try {
             OpeningDatabase testDatabase = new OpeningDatabase();
-            testDatabase.add(new Opening("test1", 40, 50, 30));
-            testDatabase.add(new Opening("test2", 38, 46, 21));
+            testDatabase.addOpening(new Opening("test1", 40, 50, 30));
+            testDatabase.addOpening(new Opening("test2", 38, 46, 21));
             JsonWriter writer = new JsonWriter("data/testWriterGeneralDatabase.json");
             writer.open();
             writer.write(testDatabase);

@@ -68,7 +68,7 @@ public class JsonReader {
         int draws = jsonObject.getInt("draws");
         int losses = jsonObject.getInt("losses");
         Opening newOpening = new Opening(name, wins, losses, draws);
-        openings.add(newOpening);
+        openings.addOpening(newOpening);
     }
     // TODO tests
     // TODO check if i need actual citation formatting
