@@ -30,3 +30,6 @@ and find the most success with.
 - As a user, I want to add a result to an opening
 - As a user, I want to be able to save my opening database to file
 - As a user, I want to be able to be able to load my to-do list from file
+
+Citation: JsonReader and JsonWriter related classes all took inspiration from the JsonSerializationDemo project
+from edx

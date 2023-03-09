@@ -27,7 +27,6 @@ public class JsonWriter {
         writer = new PrintWriter(destination);
     }
 
-    // TODO: Write tests
     // MODIFIES: this
     // EFFECTS: writes JSON representation of workroom to file
     public void write(OpeningDatabase database) {

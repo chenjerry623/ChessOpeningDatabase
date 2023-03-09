@@ -70,6 +70,4 @@ public class JsonReader {
         Opening newOpening = new Opening(name, wins, losses, draws);
         openings.addOpening(newOpening);
     }
-    // TODO tests
-    // TODO check if i need actual citation formatting
 }
