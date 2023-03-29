@@ -110,6 +110,16 @@ public class Opening implements Writable, Constants {
         }
     }
 
+    // EFFECTS: returns the values of this opening as an array
+    public String[] convertToArray() {
+        String[] result = {openingName, Integer.toString(winCount),
+                Integer.toString(lossCount), Integer.toString(drawCount)};
+
+
+        return result;
+
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();

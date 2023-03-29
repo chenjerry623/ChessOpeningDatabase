@@ -39,10 +39,26 @@ public class OpeningDatabase implements Constants {
         return openings.get(index);
     }
 
+    // EFFECTS: returns array of openings
+    public List<Opening> getOpenings() {
+        return this.openings;
+    }
+
     // MODIFIES: this
     // EFFECTS: sorts the opening by criteria
     public void sortOpenings(Comparator<Opening> c) {
         openings.sort(c);
+    }
+
+    public String[][] convertToArray() {
+        String[][] result = new String[openings.size()][4];
+        for (int i = 0; i < openings.size(); i++) {
+            result[i][0] = openings.get(i).convertToArray()[0];
+            result[i][1] = openings.get(i).convertToArray()[1];
+            result[i][2] = openings.get(i).convertToArray()[2];
+            result[i][3] = openings.get(i).convertToArray()[3];
+        }
+        return result;
     }
 
     // MODIFIES: this
