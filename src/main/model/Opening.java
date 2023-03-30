@@ -120,6 +120,7 @@ public class Opening implements Writable, Constants {
 
     }
 
+    // EFFECTS: returns the opening as a JSONObject
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
