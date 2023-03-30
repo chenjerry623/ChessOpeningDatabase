@@ -16,86 +16,149 @@ import java.util.Scanner;
 // Menu Page UI
 public class MenuFrame extends JFrame implements ActionListener {
 
+    // buttons for navigation and saving/loading
     private JButton addButton;
     private JButton browseButton;
     private JButton saveButton;
     private JButton loadButton;
 
 
+    // labels for database title and icon
     private JLabel titleLabel;
     private JLabel savedStatusLabel;
-    private JLabel databaseIcon;
 
+    // the current status of the opening database
     private OpeningDatabase openingDatabase;
 
+    // the address for storing json files
     private static final String JSON_STORE = "./data/databasefile.json";
 
+    // Json objects for reading and writing databases
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
+    // ImageIcon for the app's logo
     private ImageIcon databaseLogo;
 
+    // constants for window size
+    private static final int WIDTH = 1280;
+    private static final int HEIGHT = 750;
+
+    // MODIFIES: this
+    // EFFECTS: constructs the menu JFrame
     MenuFrame(OpeningDatabase database) {
 
-        openingDatabase = database;
+        this.openingDatabase = database;
 
-        // TODO: refactor into constants
-        this.setTitle("Opening Database App");
-        this.setLayout(null);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(1280, 1080);
-        this.setVisible(true);
+        setupFrame();
 
-        databaseLogo = new ImageIcon(getClass().getResource("chessopeningdatabaseicon.png"));
+
 
         // add title
-        titleLabel = new JLabel("Chess Opening Database");
-        titleLabel.setBounds(200, 50, 200, 300);
-        titleLabel.setIcon(databaseLogo);
-        titleLabel.setVisible(true);
+        addTitle();
 
 
         // save labels
-        savedStatusLabel = new JLabel(" ");
-        savedStatusLabel.setBounds(500, 500, 500, 50);
-        savedStatusLabel.setVisible(true);
+        addSaveLabel();
 
         // add button for adding
-        addButton = new JButton();
-        addButton.addActionListener(this);
-        addButton.setBounds(1000, 100, 200, 50);
-        addButton.add(new Label("Add Openings"));
+        addAddButton();
 
         // add button for saving
-        saveButton = new JButton();
-        saveButton.addActionListener(this);
-        saveButton.setBounds(1000, 200, 200, 50);
-        saveButton.add(new Label("Save Openings"));
+        addSaveButton();
 
         // add button for loading openings
-        loadButton = new JButton();
-        loadButton.addActionListener(this);
-        loadButton.setBounds(1000, 300, 200, 50);
-        loadButton.add(new Label("Load Openings"));
+        addLoadButton();
 
         // add button for browsing openings
-        browseButton = new JButton();
-        browseButton.addActionListener(this);
-        browseButton.setBounds(1000, 400, 200, 50);
-        browseButton.add(new Label("Browse Openings"));
+        addBrowseButton();
 
         // initializes json stuff
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
 
 
+        addComponents();
+
+        // redraw all the components to make sure they're all showing
+        this.repaint();
+        this.revalidate();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds all of the buttons and labels into the JFrame
+    private void addComponents() {
         this.add(titleLabel);
         this.add(addButton);
         this.add(saveButton);
         this.add(loadButton);
         this.add(savedStatusLabel);
         this.add(browseButton);
+    }
 
+    // MODIFIES: this
+    // EFFECTS: creates the button for browsing openings
+    private void addBrowseButton() {
+        browseButton = new JButton();
+        browseButton.addActionListener(this);
+        browseButton.setBounds(1000, 400, 200, 50);
+
+        browseButton.add(new JLabel("Browse Openings"));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the button for loading openings
+    private void addLoadButton() {
+        loadButton = new JButton();
+        loadButton.addActionListener(this);
+        loadButton.setBounds(1000, 300, 200, 50);
+        loadButton.add(new JLabel("Load Openings"));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the button for saving openings
+    private void addSaveButton() {
+        saveButton = new JButton();
+        saveButton.addActionListener(this);
+        saveButton.setBounds(1000, 200, 200, 50);
+        saveButton.add(new JLabel("Save Openings"));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the button for adding openings
+    private void addAddButton() {
+        addButton = new JButton();
+        addButton.addActionListener(this);
+        addButton.setBounds(1000, 100, 200, 50);
+        addButton.add(new JLabel("Add Openings"));
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates the save status label
+    private void addSaveLabel() {
+        savedStatusLabel = new JLabel(" ");
+        savedStatusLabel.setBounds(500, 500, 500, 50);
+        savedStatusLabel.setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates title and logo
+    private void addTitle() {
+        databaseLogo = new ImageIcon("./src/main/ui/chessopeningdatabaseicon.png");
+        titleLabel = new JLabel("Chess Opening Database");
+        titleLabel.setBounds(200, 100, 400, 300);
+        titleLabel.setIcon(databaseLogo);
+        titleLabel.setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: sets up frame's title, close operation, size and visibility
+    private void setupFrame() {
+        this.setTitle("Opening Database App");
+        this.setLayout(null);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(WIDTH, HEIGHT);
+        this.setVisible(true);
     }
 
     // EFFECTS: saves the opening database as a json file in the data folder
@@ -126,6 +189,8 @@ public class MenuFrame extends JFrame implements ActionListener {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: processes the user's button input
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {

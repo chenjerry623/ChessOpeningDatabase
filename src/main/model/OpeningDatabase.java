@@ -67,4 +67,10 @@ public class OpeningDatabase implements Constants {
         openings.add(o);
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes the selected opening
+    public void deleteOpening(int index) {
+        openings.remove(index);
+    }
+
 }
