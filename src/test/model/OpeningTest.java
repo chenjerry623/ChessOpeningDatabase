@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 class OpeningTest extends OpeningValueTester {
 
@@ -167,5 +168,23 @@ class OpeningTest extends OpeningValueTester {
         this.testOpening.displayInfo();
     }
 
+    @Test
+    public void convertToArrayTest() {
+        Opening testOpening2 = new Opening("test", 50, 30, 40);
+        String[] result = {"test", "50", "30", "40"};
+        assertEquals(testOpening2.convertToArray()[0],"test");
+        assertEquals(testOpening2.convertToArray()[1],"50");
+        assertEquals(testOpening2.convertToArray()[2],"30");
+        assertEquals(testOpening2.convertToArray()[3],"40");
+    }
+
+    @Test
+    public void toJsonTest() {
+        try {
+            testOpening.toJson();
+        } catch (Exception e) {
+            fail("Something went wrong!");
+        }
+    }
 
 }

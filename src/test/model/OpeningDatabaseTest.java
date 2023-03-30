@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 public class OpeningDatabaseTest implements Constants {
 
@@ -70,5 +71,30 @@ public class OpeningDatabaseTest implements Constants {
         testDatabase.sortOpenings(new LeastWinsComparator());
         assertEquals(testOpening2, testDatabase.getOpening(1));
         assertEquals(testOpening1, testDatabase.getOpening(0));
+    }
+
+    @Test
+    public void deleteOpeningTest() {
+        testDatabase.addOpening(testOpening1);
+        testDatabase.deleteOpening(0);
+        assertEquals(0,testDatabase.getSize());
+        assertFalse(testDatabase.getOpenings().contains(testOpening1));
+    }
+
+    @Test
+    public void convertToArrayTest() {
+        testDatabase.addOpening(testOpening1);
+        testDatabase.addOpening(testOpening2);
+        String[] result = {"test 1", "50", "40", "30"};
+        String[] result2 = {"test 2", "345", "43", "65"};
+        String[][] results = {result, result2};
+        assertEquals(testDatabase.convertToArray()[0][0],"test 1");
+        assertEquals(testDatabase.convertToArray()[0][1],"50");
+        assertEquals(testDatabase.convertToArray()[0][2],"40");
+        assertEquals(testDatabase.convertToArray()[0][3],"30");
+        assertEquals(testDatabase.convertToArray()[1][0],"test 2");
+        assertEquals(testDatabase.convertToArray()[1][1],"345");
+        assertEquals(testDatabase.convertToArray()[1][2],"43");
+        assertEquals(testDatabase.convertToArray()[1][3],"65");
     }
 }
