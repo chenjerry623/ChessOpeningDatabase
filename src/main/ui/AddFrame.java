@@ -1,15 +1,16 @@
 package ui;
 
+import model.EventLog;
 import model.Opening;
 import model.OpeningDatabase;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.io.IOException;
 
 // UI screen for adding openings
-public class AddFrame extends JFrame implements ActionListener {
+public class AddFrame extends JFrame implements ActionListener, WindowListener {
 
     // the current opening database
     private OpeningDatabase openingDatabase;
@@ -40,10 +41,12 @@ public class AddFrame extends JFrame implements ActionListener {
     private static final int WIDTH = 1280;
     private static final int HEIGHT = 750;
 
+
     // MODIFIES: this
     // EFFECTS: creates the window for adding new openings to the database
     AddFrame(OpeningDatabase database) {
         this.openingDatabase = database;
+        addWindowListener(this);
 
         setupFrame();
 
@@ -174,7 +177,6 @@ public class AddFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnMenuButton) {
-            System.out.println("Returning to Menu");
             this.setVisible(false);
             MenuFrame menuFrame = new MenuFrame(openingDatabase);
             this.dispose();
@@ -190,6 +192,47 @@ public class AddFrame extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: prints out the events
+    public void printLog(EventLog el) {
+        for (model.Event next : el) {
+            System.out.println(next.getDescription());
+        }
+    }
 
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        for (model.Event next : EventLog.getInstance()) {
+            System.out.println(next.getDescription());
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+    }
 }

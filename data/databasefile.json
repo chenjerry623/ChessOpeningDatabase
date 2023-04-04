@@ -1,14 +1,20 @@
 {"openings": [
     {
-        "wins": 36,
-        "draws": 56,
+        "wins": 240,
+        "draws": 41,
         "opening name": "deez",
-        "losses": 26
+        "losses": 53
     },
     {
-        "wins": 66,
-        "draws": 77,
+        "wins": 53,
+        "draws": 63,
         "opening name": "balls",
-        "losses": 27
+        "losses": 42
+    },
+    {
+        "wins": 31,
+        "draws": 63,
+        "opening name": "imposter",
+        "losses": 52
     }
 ]}

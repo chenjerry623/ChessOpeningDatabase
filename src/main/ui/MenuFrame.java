@@ -1,11 +1,11 @@
 package ui;
 
+import model.EventLog;
 import model.OpeningDatabase;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 import persistence.*;
 
@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 // Menu Page UI
-public class MenuFrame extends JFrame implements ActionListener {
+public class MenuFrame extends JFrame implements ActionListener, WindowListener {
 
     // buttons for navigation and saving/loading
     private JButton addButton;
@@ -44,11 +44,20 @@ public class MenuFrame extends JFrame implements ActionListener {
     private static final int WIDTH = 1280;
     private static final int HEIGHT = 750;
 
+    WindowListener listener = new WindowAdapter() {
+        public void windowClosing(WindowEvent evt) {
+            for (model.Event next : EventLog.getInstance()) {
+                System.out.println(next.getDescription());
+            }
+        }
+    };
+
     // MODIFIES: this
     // EFFECTS: constructs the menu JFrame
     MenuFrame(OpeningDatabase database) {
 
         this.openingDatabase = database;
+        addWindowListener(this);
 
         setupFrame();
 
@@ -181,10 +190,8 @@ public class MenuFrame extends JFrame implements ActionListener {
     private void loadOpenings() {
         try {
             openingDatabase = jsonReader.read();
-            System.out.println("Loaded openings from " + JSON_STORE);
             savedStatusLabel.setText("Loaded openings from " + JSON_STORE);
         } catch (IOException e) {
-            System.out.println("Unable to read from file: " + JSON_STORE);
             savedStatusLabel.setText("Unable to read from file: " + JSON_STORE);
         }
     }
@@ -194,7 +201,6 @@ public class MenuFrame extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
-            System.out.println("Opening Add Screen");
             this.setVisible(false);
             AddFrame addMenu = new AddFrame(openingDatabase);
             this.dispose();
@@ -206,5 +212,41 @@ public class MenuFrame extends JFrame implements ActionListener {
             this.setVisible(false);
             BrowseFrame browseFrame = new BrowseFrame(openingDatabase);
         }
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        for (model.Event next : EventLog.getInstance()) {
+            System.out.println(next.getDescription());
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

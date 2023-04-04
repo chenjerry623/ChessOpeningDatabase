@@ -103,10 +103,13 @@ public class Opening implements Writable, Constants {
     public void addUserResult(Side side, Result result) {
         if (result == Result.WIN) {
             winCount++;
+            EventLog.getInstance().logEvent(new Event("Win added to " + this.getOpeningName()));
         } else if (result == Result.DRAW) {
             drawCount++;
+            EventLog.getInstance().logEvent(new Event("Draw added to " + this.getOpeningName()));
         } else {
             lossCount++;
+            EventLog.getInstance().logEvent(new Event("Loss added to " + this.getOpeningName()));
         }
     }
 

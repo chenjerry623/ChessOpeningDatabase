@@ -1,19 +1,15 @@
 package ui;
 
-import model.Opening;
-import model.OpeningDatabase;
-import model.Result;
-import model.Side;
+import model.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.List;
 import java.util.Vector;
 
 // UI for browsing openings window
-public class BrowseFrame extends JFrame implements ActionListener {
+public class BrowseFrame extends JFrame implements ActionListener, WindowListener {
 
     // current opening database state
     private OpeningDatabase openingDatabase;
@@ -37,10 +33,12 @@ public class BrowseFrame extends JFrame implements ActionListener {
     private static final int WIDTH = 1280;
     private static final int HEIGHT = 750;
 
+
     // MODIFIES: this
     // EFFECTS: creates the window for browsing openings
     BrowseFrame(OpeningDatabase database) {
         this.openingDatabase = database;
+        addWindowListener(this);
 
         makeTable();
 
@@ -173,9 +171,45 @@ public class BrowseFrame extends JFrame implements ActionListener {
     // MODIFIES: this
     // EFFECTS: opens up the menu window, then deletes the browse window
     private void returnToMenu() {
-        System.out.println("Returning to Menu");
         this.setVisible(false);
         MenuFrame menuFrame = new MenuFrame(openingDatabase);
         this.dispose();
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        for (model.Event next : EventLog.getInstance()) {
+            System.out.println(next.getDescription());
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
     }
 }

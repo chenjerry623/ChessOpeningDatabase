@@ -65,12 +65,15 @@ public class OpeningDatabase implements Constants {
     // EFFECTS: adds new opening
     public void addOpening(Opening o) {
         openings.add(o);
+        EventLog.getInstance().logEvent(new Event(o.getOpeningName() + " added to opening database"));
     }
 
     // MODIFIES: this
     // EFFECTS: removes the selected opening
     public void deleteOpening(int index) {
+        String removeName = openings.get(index).getOpeningName();
         openings.remove(index);
+        EventLog.getInstance().logEvent(new Event(removeName + " removed from opening database"));
     }
 
 }
