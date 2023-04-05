@@ -205,6 +205,7 @@ public class AddFrame extends JFrame implements ActionListener, WindowListener {
 
     }
 
+    // EFFECTS: prints out event logs on window close
     @Override
     public void windowClosing(WindowEvent e) {
         for (model.Event next : EventLog.getInstance()) {

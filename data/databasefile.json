@@ -1,20 +1,20 @@
 {"openings": [
     {
-        "wins": 240,
-        "draws": 41,
-        "opening name": "deez",
-        "losses": 53
+        "wins": 75,
+        "draws": 851,
+        "opening name": "QGD",
+        "losses": 63
     },
     {
-        "wins": 53,
-        "draws": 63,
-        "opening name": "balls",
-        "losses": 42
+        "wins": 88,
+        "draws": 7,
+        "opening name": "King's Indian",
+        "losses": 64
     },
     {
-        "wins": 31,
-        "draws": 63,
-        "opening name": "imposter",
-        "losses": 52
+        "wins": 436,
+        "draws": 590,
+        "opening name": "Ruy Lopez",
+        "losses": 64
     }
 ]}

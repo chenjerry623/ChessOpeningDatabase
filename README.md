@@ -85,5 +85,28 @@ How to add a win to an opening (second required action):
 1. Run main
 2. Click the "Load Openings" button.
 
+## Phase 4: Task 2
+QGD added to opening database
+
+deez added to opening database
+
+example added to opening database
+
+King's Indian added to opening database
+
+Win added to King's Indian
+
+Loss added to deez
+
+Draw added to QGD
+
+deez removed from opening database
+
+example removed from opening database
+
+Ruy Lopez added to opening database
+
+Win added to Ruy Lopez
+
 Citation: JsonReader and JsonWriter related classes all took inspiration from the JsonSerializationDemo project
 from edx

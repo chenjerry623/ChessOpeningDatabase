@@ -181,6 +181,7 @@ public class BrowseFrame extends JFrame implements ActionListener, WindowListene
 
     }
 
+    // EFFECTS: prints out event logs on window close
     @Override
     public void windowClosing(WindowEvent e) {
         for (model.Event next : EventLog.getInstance()) {
