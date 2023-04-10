@@ -50,6 +50,7 @@ public class OpeningDatabase implements Constants {
         openings.sort(c);
     }
 
+    // EFFECTS: returns the array versions of the openings as a 2D array
     public String[][] convertToArray() {
         String[][] result = new String[openings.size()][4];
         for (int i = 0; i < openings.size(); i++) {

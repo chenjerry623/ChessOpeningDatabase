@@ -166,7 +166,7 @@ public class AddFrame extends JFrame implements ActionListener, WindowListener {
     }
 
     // MODIFIES: this
-    // EFFECTS: creates a title lable
+    // EFFECTS: creates a title label
     private void makeTitle() {
         titleLabel = new JLabel("Add an Opening");
         titleLabel.setBounds(200, 0, 100, 50);
