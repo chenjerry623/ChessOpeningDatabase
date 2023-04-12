@@ -113,12 +113,17 @@ Win added to Ruy Lopez
 If I had extra time to work on this project, I would extract some of my code into
 helper functions in order to make it easier to understand. For instance, in AddFrame's
 actionPerformed function, I would create a helper function for processing the text fields
-and creating a new opening, rather than leaving the code in the if statement. Additionally,
-I would make an abstract UIFrame class which all of my window classes (BrowseFrame, AddFrame,
+and creating a new opening, rather than leaving the code in the if statement. 
+
+Additionally, I would make an abstract UIFrame class which all of my window classes (BrowseFrame, AddFrame,
 MenuFrame) would extend. This class would contain the constant values WIDTH and HEIGHT as well
 as a constructor which sets the class' database value to the input database, adds a window listener
 and calls SetupFrame(). This will eliminate duplicate code and ensure that every UI window
-will have the same setup parameters if more were to be added in the future.
+will have the same setup parameters if more were to be added in the future. 
+
+Finally, I would use the singleton design pattern for my OpeningDatabase class so that it can be 
+accessed universally throughout the code. This means that I would be able to access data about my OpeningDatabase
+from any Frame without having to have an OpeningDatabase get passed in as a parameter.
 
 Citation: JsonReader and JsonWriter related classes all took inspiration from the JsonSerializationDemo project
 from edx
