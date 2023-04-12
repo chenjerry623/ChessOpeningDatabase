@@ -209,6 +209,7 @@ public class AddFrame extends JFrame implements ActionListener, WindowListener {
     @Override
     public void windowClosing(WindowEvent e) {
         for (model.Event next : EventLog.getInstance()) {
+            System.out.println(next.getDate());
             System.out.println(next.getDescription());
         }
     }

@@ -86,27 +86,33 @@ How to add a win to an opening (second required action):
 2. Click the "Load Openings" button.
 
 ## Phase 4: Task 2
+Wed Apr 12 13:19:00 PDT 2023
+
 QGD added to opening database
+
+Wed Apr 12 13:19:55 PDT 2023
+
+Sicilian added to opening database
+
+Wed Apr 12 13:20:04 PDT 2023
 
 deez added to opening database
 
-example added to opening database
-
-King's Indian added to opening database
-
-Win added to King's Indian
-
-Loss added to deez
-
-Draw added to QGD
+Wed Apr 12 13:20:14 PDT 2023
 
 deez removed from opening database
 
-example removed from opening database
+Wed Apr 12 13:20:16 PDT 2023
 
-Ruy Lopez added to opening database
+Win added to QGD
 
-Win added to Ruy Lopez
+Wed Apr 12 13:20:18 PDT 2023
+
+Loss added to Sicilian
+
+Wed Apr 12 13:20:21 PDT 2023
+
+Draw added to Sicilian
 
 ## Phase 4: Task 3
 
