@@ -32,20 +32,19 @@ and find the most success with.
 - As a user, I want to be able to save my opening database to file
 - As a user, I want to be able to be able to load my to-do list from file
 
-PHASE 3:
+FOR GUI VERSION:
 - As a user, I want to be able to add multiple Openings to an Opening Database
 - As a user, I want to be able to load and save the state of the application
 - As a user, I want to be able to delete an opening from the database
 - As a user, I want to be able to add a win/loss/draw to an opening
 
-## Instructions for Grader
+## Instructions for Use (GUI Version)
 
 How to view all openings added to the database:
 1. Run main.
 2. Press the "Browse Openings" button to enter the opening browsing screen.
 
-### First related action to adding Xs to Ys (if this counts):
-How to add multiple openings to an opening database:
+### How to add multiple openings to an opening database:
 1. Run main.
 2. Press the "Add Openings" button to enter the opening adding screen.
 3. Enter the desired name into the name field.
@@ -55,17 +54,14 @@ How to add multiple openings to an opening database:
     OR
     press the "Return to Menu" button to return the menu, then repeat from step 2.
 
-
-### First related action to adding Xs to Ys (if adding openings to database doesn't count):
-How to delete an opening:
+### How to delete an opening:
 1. Run main.
 2. If the database is empty, use the instructions from earlier to add opening(s) to the database.
 3. Press the "Browse Openings" button to enter the opening browsing screen.
 4. Using your mouse, click on an opening from the list
 5. Click the "Delete Opening" button.
 
-### Second related action to adding Xs to Ys:
-How to add a win to an opening (second required action):
+### How to add a win to an opening (second required action):
 1. Run main.
 2. If the database is empty, use the instructions from earlier to add opening(s) to the database.
 3. Press the "Browse Openings" button to enter the opening browsing screen.
@@ -85,51 +81,6 @@ How to add a win to an opening (second required action):
 1. Run main
 2. Click the "Load Openings" button.
 
-## Phase 4: Task 2
-Wed Apr 12 13:19:00 PDT 2023
-
-QGD added to opening database
-
-Wed Apr 12 13:19:55 PDT 2023
-
-Sicilian added to opening database
-
-Wed Apr 12 13:20:04 PDT 2023
-
-deez added to opening database
-
-Wed Apr 12 13:20:14 PDT 2023
-
-deez removed from opening database
-
-Wed Apr 12 13:20:16 PDT 2023
-
-Win added to QGD
-
-Wed Apr 12 13:20:18 PDT 2023
-
-Loss added to Sicilian
-
-Wed Apr 12 13:20:21 PDT 2023
-
-Draw added to Sicilian
-
-## Phase 4: Task 3
-
-If I had extra time to work on this project, I would extract some of my code into
-helper functions in order to make it easier to understand. For instance, in AddFrame's
-actionPerformed function, I would create a helper function for processing the text fields
-and creating a new opening, rather than leaving the code in the if statement. 
-
-Additionally, I would make an abstract UIFrame class which all of my window classes (BrowseFrame, AddFrame,
-MenuFrame) would extend. This class would contain the constant values WIDTH and HEIGHT as well
-as a constructor which sets the class' database value to the input database, adds a window listener
-and calls SetupFrame(). This will eliminate duplicate code and ensure that every UI window
-will have the same setup parameters if more were to be added in the future. 
-
-Finally, I would use the singleton design pattern for my OpeningDatabase class so that it can be 
-accessed universally throughout the code. This means that I would be able to access data about my OpeningDatabase
-from any Frame without having to have an OpeningDatabase get passed in as a parameter.
 
 Citation: JsonReader and JsonWriter related classes all took inspiration from the JsonSerializationDemo project
-from edx
+from the CPSC210 edx course(https://edge.edx.org/courses/course-v1:UBC+CPSC210+all/)
